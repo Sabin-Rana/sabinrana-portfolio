@@ -22,14 +22,14 @@
             .fa-cisco-custom::before {
               content: "";
               display: inline-block;
-              width: 45px;
-              height: 45px;
+              width: 24px;
+              height: 24px;
               background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Cisco_logo_blue_2016.svg/1200px-Cisco_logo_blue_2016.svg.png');
               background-size: contain;
               background-repeat: no-repeat;
               vertical-align: middle;
+              margin-right: 20px;
             }
-        
         * {
             margin: 0;
             padding: 0;
@@ -1248,12 +1248,18 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         
-        .social-link i {
-            font-size: 2rem;
-            margin-right: 20px;
-            color: var(--accent-color);
-            transition: var(--transition);
-        }
+            .social-link i, 
+            .social-link .fa-cisco-custom {
+              font-size: 1.5rem;
+              margin-right: 20px;
+              width: 24px;
+              height: 24px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: var(--accent-color);
+              transition: var(--transition);
+            }
         
         .social-link:hover i {
             transform: scale(1.2);
