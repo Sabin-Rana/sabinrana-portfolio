@@ -54,24 +54,58 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            const offsetTop = targetElement.offsetTop - 80; // Adjust for fixed header
+// Enhanced smooth scrolling for navigation links AND scroll indicator
+document.addEventListener('DOMContentLoaded', function() {
+    // Navigation links smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
             
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
-        }
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const offsetTop = targetElement.offsetTop - 80;
+                
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
+    
+    // Scroll indicator functionality (desktop + mobile)
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    
+    if (scrollIndicator) {
+        scrollIndicator.style.cursor = 'pointer';
+        
+        // Click event (desktop)
+        scrollIndicator.addEventListener('click', function() {
+            const aboutSection = document.querySelector('#about');
+            if (aboutSection) {
+                const offsetTop = aboutSection.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+        
+        // Touch event (mobile)
+        scrollIndicator.addEventListener('touchend', function() {
+            const aboutSection = document.querySelector('#about');
+            if (aboutSection) {
+                const offsetTop = aboutSection.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
 });
 
 // Navbar background on scroll
