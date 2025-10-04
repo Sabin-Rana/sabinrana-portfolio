@@ -1,10 +1,10 @@
 # Sabin Rana - Professional Portfolio
 
-🌐 **Live Site:** [sabinrana.github.io](https://sabinrana.github.io)
+**Live Site:** [sabinrana.github.io](https://sabinrana.github.io)
 
 A modern, responsive portfolio website showcasing expertise in cloud architecture, networking, and security.
 
-## 🚀 About This Project
+## About This Project
 
 This portfolio represents my journey in cloud computing and infrastructure design, featuring:
 
@@ -13,7 +13,7 @@ This portfolio represents my journey in cloud computing and infrastructure desig
 - **Performance Optimized**: Fast loading and smooth animations
 - **Accessibility**: Built with best practices for all users
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
 - **Styling**: Custom CSS with CSS Variables
@@ -21,7 +21,7 @@ This portfolio represents my journey in cloud computing and infrastructure desig
 - **Fonts**: Google Fonts (Inter)
 - **Deployment**: GitHub Pages
 
-## 📁 Project Structure
+## Project Structure
 sabinrana.github.io/
 ├── index.html # Main portfolio page
 ├── README.md # Project documentation
@@ -39,7 +39,7 @@ sabinrana.github.io/
 └── DEMOportfolio.pdf # Downloadable portfolio
 
 
-## 🎯 Features
+## Features
 
 - **Smooth Navigation**: Fixed header with smooth scrolling
 - **Mobile Menu**: Hamburger menu for mobile devices
@@ -47,7 +47,7 @@ sabinrana.github.io/
 - **Professional Sections**: Skills, Projects, Certifications, Contact
 - **Performance**: Optimized images and fast loading
 
-## 🚀 Local Development
+## Local Development
 
 To run this project locally:
 
