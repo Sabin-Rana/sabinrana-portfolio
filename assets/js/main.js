@@ -248,3 +248,26 @@ const mobileCSS = `
 const style = document.createElement('style');
 style.textContent = mobileCSS;
 document.head.appendChild(style);
+
+// ===== SCROLL INDICATOR FUNCTIONALITY =====
+document.addEventListener('DOMContentLoaded', function() {
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    
+    if (scrollIndicator) {
+        // Make it clickable
+        scrollIndicator.style.cursor = 'pointer';
+        
+        // Add click functionality
+        scrollIndicator.addEventListener('click', function() {
+            const aboutSection = document.querySelector('#about');
+            if (aboutSection) {
+                const offsetTop = aboutSection.offsetTop - 80;
+                
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
+});
