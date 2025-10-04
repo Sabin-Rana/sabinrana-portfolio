@@ -1,6 +1,6 @@
 # Sabin Rana - Professional Portfolio
 
-**Live Site:** [sabinrana.github.io](https://sabinrana.github.io)
+**Live Site:** [sabinrana.github.io](https://sabin-rana.github.io/sabinrana.github.io/)
 
 A modern, responsive portfolio website showcasing expertise in cloud architecture, networking, and security.
 
