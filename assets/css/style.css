@@ -4433,3 +4433,21 @@ section {
     flex-wrap: nowrap !important;
     justify-content: center !important;
 }
+
+/* Restore AWS icons while keeping title on one line */
+.section-title-cloud {
+    white-space: nowrap !important;
+    overflow: visible !important;
+}
+
+.cloud-letter::before {
+    position: absolute !important;
+    top: -35px !important;
+    z-index: 10 !important;
+}
+
+/* Add space between words */
+.cloud-letter.space {
+    width: 20px !important;
+    display: inline-block !important;
+}
