@@ -4253,3 +4253,147 @@ section {
     animation-duration: 1s;
     fill: var(--accent-color);
 }
+
+/* Cloud Infrastructure Title Animation */
+.section-title-cloud {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-bottom: 3rem;
+}
+
+.cloud-letter {
+    display: inline-block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: cloudForm 0.8s ease forwards;
+    position: relative;
+}
+
+/* Staggered animation for each letter */
+.cloud-letter:nth-child(1) { animation-delay: 0.1s; }
+.cloud-letter:nth-child(2) { animation-delay: 0.2s; }
+.cloud-letter:nth-child(3) { animation-delay: 0.3s; }
+.cloud-letter:nth-child(4) { animation-delay: 0.4s; }
+.cloud-letter:nth-child(5) { animation-delay: 0.5s; }
+.cloud-letter:nth-child(6) { animation-delay: 0.6s; }
+.cloud-letter:nth-child(7) { animation-delay: 0.7s; }
+.cloud-letter:nth-child(8) { animation-delay: 0.8s; }
+.cloud-letter:nth-child(9) { animation-delay: 0.9s; }
+.cloud-letter:nth-child(10) { animation-delay: 1.0s; }
+.cloud-letter:nth-child(11) { animation-delay: 1.1s; }
+.cloud-letter:nth-child(12) { animation-delay: 1.2s; }
+.cloud-letter:nth-child(13) { animation-delay: 1.3s; }
+.cloud-letter:nth-child(14) { animation-delay: 1.4s; }
+.cloud-letter:nth-child(15) { animation-delay: 1.5s; }
+.cloud-letter:nth-child(16) { animation-delay: 1.6s; }
+.cloud-letter:nth-child(17) { animation-delay: 1.7s; }
+.cloud-letter:nth-child(18) { animation-delay: 1.8s; }
+.cloud-letter:nth-child(19) { animation-delay: 1.9s; }
+
+@keyframes cloudForm {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Floating AWS service icons */
+.cloud-letter::before {
+    content: '';
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Font Awesome 6 Brands';
+    font-size: 1.2rem;
+    opacity: 0;
+    animation: floatIcon 3s ease-in-out infinite;
+}
+
+/* Real AWS service icons */
+.cloud-letter:nth-child(3)::before { 
+    content: '\f375'; /* EC2 */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #FF9900;
+    animation-delay: 0.5s; 
+}
+
+.cloud-letter:nth-child(7)::before { 
+    content: '\f0c2'; /* S3 */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #FF9900;
+    animation-delay: 1s; 
+}
+
+.cloud-letter:nth-child(11)::before { 
+    content: '\f085'; /* Lambda */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #FF9900;
+    animation-delay: 1.5s; 
+}
+
+.cloud-letter:nth-child(15)::before { 
+    content: '\f1c0'; /* VPC */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #FF9900;
+    animation-delay: 2s; 
+}
+
+@keyframes floatIcon {
+    0%, 100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(0px);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-15px);
+    }
+}
+
+/* Network connection lines */
+.section-title-cloud::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    animation: drawLine 2s ease 2s forwards;
+}
+
+@keyframes drawLine {
+    to {
+        width: 200px;
+    }
+}
+
+/* Hover effects */
+.cloud-letter:hover {
+    color: var(--primary-color);
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .cloud-letter {
+        font-size: 1.8rem;
+    }
+    
+    .cloud-letter::before {
+        font-size: 1rem;
+        top: -30px;
+    }
+}
