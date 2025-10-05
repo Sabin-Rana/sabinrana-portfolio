@@ -556,3 +556,186 @@ function initSkillsGalaxy() {
     
     // ... rest of the functions (createConstellationLines, etc.)
 }
+
+// ===== ENHANCED TOUCH FEEDBACK FOR QUALIFICATION CARDS =====
+function initQualificationTouch() {
+    const certCards = document.querySelectorAll('.cert-card');
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    if (isTouchDevice) {
+        certCards.forEach(card => {
+            card.addEventListener('touchstart', function() {
+                this.classList.add('touch-active');
+            });
+            
+            card.addEventListener('touchend', function() {
+                this.classList.remove('touch-active');
+            });
+            
+            card.addEventListener('touchcancel', function() {
+                this.classList.remove('touch-active');
+            });
+        });
+    }
+}
+
+// Initialize all touch functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // ... your existing initialization code ...
+    
+    initQualificationTouch(); // Add this line
+});
+
+// ===== ARCHITECTURE MODAL FUNCTIONALITY =====
+function initArchitectureModal() {
+    const modal = document.getElementById('architectureModal');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.querySelector('.close-modal');
+    const viewButtons = document.querySelectorAll('.view-architecture-btn');
+
+    // Open modal when view architecture button is clicked
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const projectCard = this.closest('.project-card-3d');
+            const projectImage = projectCard.querySelector('img');
+            
+            if (projectImage && projectImage.src) {
+                modalImage.src = projectImage.src;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    // Close modal when X is clicked
+    closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    // Close modal when clicking outside the image
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Prevent modal close when clicking on the image
+    modalImage.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+}
+
+// Also add this for mobile touch support
+function initMobileModalSupport() {
+    const modal = document.getElementById('architectureModal');
+    const modalImage = document.getElementById('modalImage');
+    
+    // Double tap to zoom on mobile
+    let lastTap = 0;
+    modalImage.addEventListener('touchend', function(e) {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+        
+        if (tapLength < 500 && tapLength > 0) {
+            // Double tap detected - toggle zoom
+            if (this.style.transform === 'scale(2)') {
+                this.style.transform = 'scale(1)';
+            } else {
+                this.style.transform = 'scale(2)';
+            }
+            e.preventDefault();
+        }
+        lastTap = currentTime;
+    });
+
+    // Reset zoom when closing modal
+    modal.addEventListener('click', function() {
+        modalImage.style.transform = 'scale(1)';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // ... your existing code ...
+    
+    initArchitectureModal();
+    initMobileModalSupport();
+    
+    // ... rest of your code ...
+});
+
+// Terminal typing effect
+function initTerminalTyping() {
+    const typingElement = document.querySelector('.typing-text');
+    if (!typingElement) return;
+    
+    const text = typingElement.textContent;
+    typingElement.textContent = '';
+    typingElement.style.borderRight = '2px solid white';
+    
+    let index = 0;
+    function type() {
+        if (index < text.length) {
+            typingElement.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, 150);
+        } else {
+            // Keep cursor blinking after typing completes
+            setInterval(() => {
+                typingElement.style.borderRight = typingElement.style.borderRight ? '' : '2px solid white';
+            }, 500);
+        }
+    }
+    
+    // Start typing after hero loads
+    setTimeout(type, 1000);
+}
+
+// Call in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    initTerminalTyping();
+});
+
+// Binary Rain Effect
+function initBinaryRain() {
+    const binaryRain = document.querySelector('.binary-rain');
+    if (!binaryRain) return;
+    
+    function createBinary() {
+        const digit = document.createElement('div');
+        digit.className = 'binary-digit';
+        digit.textContent = Math.random() > 0.5 ? '0' : '1';
+        digit.style.left = Math.random() * 100 + 'vw';
+        digit.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        digit.style.opacity = Math.random() * 0.5 + 0.1;
+        
+        binaryRain.appendChild(digit);
+        
+        // Remove digit after animation completes
+        setTimeout(() => {
+            digit.remove();
+        }, 5000);
+    }
+    
+    // Create multiple binary digits
+    setInterval(createBinary, 100);
+}
+
+// Call in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    initBinaryRain();
+});
+
+// Create more frequent and visible digits
+setInterval(createBinary, 50); // More frequent
+
