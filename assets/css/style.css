@@ -4424,3 +4424,12 @@ section {
     width: 100% !important;
     justify-content: center !important;
 }
+
+/* Mobile fix - prevent title line breaks */
+.section-title-cloud {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+}
