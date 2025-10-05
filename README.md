@@ -47,10 +47,3 @@ sabinrana.github.io/
 - **Professional Sections**: Skills, Projects, Certifications, Contact
 - **Performance**: Optimized images and fast loading
 
-## Local Development
-
-To run this project locally:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Sabin-Rana/sabinrana.github.io.git
