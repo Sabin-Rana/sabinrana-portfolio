@@ -4254,6 +4254,7 @@ section {
     fill: var(--accent-color);
 }
 
+<<<<<<< HEAD
 /* Cloud Infrastructure Title Animation */
 .section-title-cloud {
     position: relative;
@@ -4397,3 +4398,20 @@ section {
         top: -30px;
     }
 }
+=======
+/* Mobile fix for network logo */
+@media (max-width: 768px) {
+    .network-lines {
+        width: 120px; /* Smaller for mobile */
+        height: 20px;
+    }
+    
+    .network-path {
+        stroke-width: 1; /* Thinner lines */
+    }
+    
+    .network-node {
+        r: 1.5; /* Smaller nodes */
+    }
+}
+>>>>>>> e5213e7c152423987796bd69b89648350496982f
