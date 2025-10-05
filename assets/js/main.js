@@ -417,7 +417,142 @@ function initTechIcons() {
     });
 }
 
+
 document.addEventListener('DOMContentLoaded', function() {
     initTechIcons();
     
 });
+
+// ===== SKILLS GALAXY =====
+function initSkillsGalaxy() {
+    const galaxyViewport = document.querySelector('.galaxy-viewport');
+    const skillDetails = document.querySelector('.skill-details');
+    const skillName = document.querySelector('.skill-name');
+    const proficiencyFill = document.querySelector('.proficiency-fill');
+    const proficiencyText = document.querySelector('.proficiency-text');
+    const skillDescription = document.querySelector('.skill-description');
+    const skillCategoryContent = document.querySelector('.skill-category-content');
+    
+    if (!galaxyViewport) return;
+    
+    // Your existing skills content organized by category
+    const skillsData = [
+        {
+            id: 'cloud-toolkit',
+            name: 'My Cloud Toolkit',
+            level: 85,
+            description: 'Core AWS services and technologies I use daily in projects',
+            content: `
+                <div class="skill-items">
+                    <div class="skill-item">
+                        <span class="skill-name">AWS Core Services</span>
+                        <p>Building with EC2, S3, VPC, RDS - the services I use daily in my projects</p>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Serverless & Lambda</span>
+                        <p>Creating event-driven architectures for cost-effective scaling</p>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Networking & Security</span>
+                        <p>Designing secure VPCs and implementing IAM policies</p>
+                    </div>
+                </div>
+            `,
+            x: 30, y: 40
+        },
+        {
+            id: 'mastering',
+            name: 'Currently Mastering',
+            level: 70,
+            description: 'Technologies and practices I\'m actively learning and implementing',
+            content: `
+                <div class="skill-items">
+                    <div class="skill-item">
+                        <span class="skill-name">Terraform & Infrastructure as Code</span>
+                        <p>Converting all my console projects to automated Terraform configurations</p>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">CI/CD Pipelines</span>
+                        <p>Learning GitHub Actions and AWS CodePipeline for automated deployments</p>
+                    </div>
+                </div>
+            `,
+            x: 60, y: 30
+        },
+        {
+            id: 'foundation',
+            name: 'My Foundation',
+            level: 90,
+            description: 'Core expertise that shapes my approach to cloud architecture',
+            content: `
+                <div class="skill-items">
+                    <div class="skill-item">
+                        <span class="skill-name">Networking Expertise</span>
+                        <p>CCNP ENCOR knowledge applied to cloud networking design</p>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Security Mindset</span>
+                        <p>MScIT in Applied Security shaping my approach to cloud architecture</p>
+                    </div>
+                </div>
+            `,
+            x: 40, y: 60
+        }
+    ];
+    
+    // Create skill stars
+    skillsData.forEach(skill => {
+        const star = document.createElement('div');
+        star.className = `skill-star ${getProficiencyClass(skill.level)}`;
+        star.style.left = `${skill.x}%`;
+        star.style.top = `${skill.y}%`;
+        star.setAttribute('data-skill', skill.id);
+        
+        // Desktop events
+        star.addEventListener('mouseenter', () => showSkillDetails(skill));
+        star.addEventListener('click', () => showSkillDetails(skill));
+        
+        // Mobile touch events
+        star.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            showSkillDetails(skill);
+        });
+        
+        galaxyViewport.appendChild(star);
+    });
+    
+    // Show first category by default
+    if (skillsData.length > 0) {
+        showSkillDetails(skillsData[0]);
+        document.querySelector(`[data-skill="${skillsData[0].id}"]`).classList.add('active');
+    }
+    
+    // ... rest of the JavaScript code remains the same (dragging, controls, etc.)
+    // [Keep all the dragging, zoom controls, and mobile touch code from previous version]
+    
+    function showSkillDetails(skill) {
+        // Update skill details
+        skillName.textContent = skill.name;
+        proficiencyFill.style.width = `${skill.level}%`;
+        proficiencyText.textContent = `${skill.level}%`;
+        skillDescription.textContent = skill.description;
+        
+        // Update category content with your existing HTML
+        skillCategoryContent.innerHTML = skill.content;
+        
+        // Highlight active star
+        document.querySelectorAll('.skill-star').forEach(star => {
+            star.classList.remove('active');
+        });
+        document.querySelector(`[data-skill="${skill.id}"]`).classList.add('active');
+    }
+    
+    function getProficiencyClass(level) {
+        if (level >= 90) return 'expert';
+        if (level >= 80) return 'advanced';
+        if (level >= 70) return 'intermediate';
+        return 'beginner';
+    }
+    
+    // ... rest of the functions (createConstellationLines, etc.)
+}
