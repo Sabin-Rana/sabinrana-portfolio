@@ -4415,3 +4415,12 @@ section {
     }
 }
 >>>>>>> e5213e7c152423987796bd69b89648350496982f
+
+/* Force center Featured Architecture title */
+.section-title-cloud {
+    display: block !important;
+    text-align: center !important;
+    margin: 0 auto 3rem auto !important;
+    width: 100% !important;
+    justify-content: center !important;
+}
