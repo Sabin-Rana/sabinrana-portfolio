@@ -4253,3 +4253,19 @@ section {
     animation-duration: 1s;
     fill: var(--accent-color);
 }
+
+/* Mobile fix for network logo */
+@media (max-width: 768px) {
+    .network-lines {
+        width: 120px; /* Smaller for mobile */
+        height: 20px;
+    }
+    
+    .network-path {
+        stroke-width: 1; /* Thinner lines */
+    }
+    
+    .network-node {
+        r: 1.5; /* Smaller nodes */
+    }
+}
