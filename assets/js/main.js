@@ -207,33 +207,97 @@ if (heroSection) {
     heroObserver.observe(heroSection);
 }
 
-// 3D tilt effect for about card
-function initTiltEffect() {
+// ===== FLOATING CLOUDS & MAGNETIC EFFECTS =====
+function initFloatingEffects() {
     const aboutCard = document.querySelector('.about-card-3d');
     if (!aboutCard) return;
-
-    aboutCard.addEventListener('mousemove', (e) => {
-        const rect = aboutCard.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+    
+    // Add cloud container to about card
+    const cloudContainer = document.createElement('div');
+    cloudContainer.className = 'cloud-container';
+    cloudContainer.innerHTML = `
+        <div class="floating-cloud cloud-1"></div>
+        <div class="floating-cloud cloud-2"></div>
+        <div class="floating-cloud cloud-3"></div>
+    `;
+    aboutCard.appendChild(cloudContainer);
+    
+    // Magnetic effect for profile image
+    const profileImage = document.querySelector('.profile-image-hover');
+    const techItems = document.querySelectorAll('.tech-item');
+    
+    // Desktop magnetic effects
+    if (window.matchMedia("(hover: hover)").matches) {
+        // Profile image magnetic effect
+        if (profileImage) {
+            profileImage.addEventListener('mousemove', (e) => {
+                const rect = profileImage.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width / 2) / 20;
+                const y = (e.clientY - rect.top - rect.height / 2) / 20;
+                
+                profileImage.style.setProperty('--mouse-x', `${x}px`);
+                profileImage.style.setProperty('--mouse-y', `${y}px`);
+                profileImage.classList.add('magnetic-hover');
+            });
+            
+            profileImage.addEventListener('mouseleave', () => {
+                profileImage.classList.remove('magnetic-hover');
+                profileImage.style.removeProperty('--mouse-x');
+                profileImage.style.removeProperty('--mouse-y');
+            });
+        }
         
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+        // Tech items magnetic effects
+        techItems.forEach(item => {
+            item.addEventListener('mousemove', (e) => {
+                const rect = item.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width / 2) / 10;
+                const y = (e.clientY - rect.top - rect.height / 2) / 10;
+                
+                item.style.setProperty('--tech-x', `${x}px`);
+                item.style.setProperty('--tech-y', `${y}px`);
+                item.classList.add('magnetic-hover');
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                item.classList.remove('magnetic-hover');
+                item.style.removeProperty('--tech-x');
+                item.style.removeProperty('--tech-y');
+            });
+        });
+    }
+    
+    // Mobile touch effects
+    else {
+        techItems.forEach(item => {
+            item.addEventListener('touchstart', () => {
+                item.style.transform = 'scale(0.95)';
+                item.style.background = 'var(--primary-color)';
+                item.style.color = 'white';
+            });
+            
+            item.addEventListener('touchend', () => {
+                item.style.transform = '';
+                item.style.background = '';
+                item.style.color = '';
+            });
+        });
         
-        const rotateY = (x - centerX) / 50;
-        const rotateX = (centerY - y) / 50;
-        
-        aboutCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
-    });
-
-    aboutCard.addEventListener('mouseleave', () => {
-        aboutCard.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
-    });
+        if (profileImage) {
+            profileImage.addEventListener('touchstart', () => {
+                profileImage.style.transform = 'scale(0.98)';
+            });
+            
+            profileImage.addEventListener('touchend', () => {
+                profileImage.style.transform = '';
+            });
+        }
+    }
 }
 
-// Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    initTiltEffect();
+    initFloatingEffects(); // ← NEW FUNCTION NAME
+    // ... other code ...
 });
 
 // Mobile-specific optimizations
@@ -304,4 +368,56 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+});
+
+// ===== FLOATING TECH ICONS INTERACTION =====
+function initTechIcons() {
+    const aboutCard = document.querySelector('.about-card-3d');
+    if (!aboutCard) return;
+    
+    const techIconsContainer = document.createElement('div');
+    techIconsContainer.className = 'floating-tech-icons';
+    techIconsContainer.innerHTML = `
+        <div class="tech-icon" data-tech="aws">☁️</div>
+        <div class="tech-icon" data-tech="cisco">🌐</div>
+        <div class="tech-icon" data-tech="security">🔒</div>
+        <div class="tech-icon" data-tech="terraform">⚙️</div>
+    `;
+    aboutCard.appendChild(techIconsContainer);
+    
+    // Make tech icons interactive
+    const techIcons = document.querySelectorAll('.tech-icon');
+    
+    techIcons.forEach(icon => {
+        // Desktop hover
+        icon.addEventListener('mouseenter', function() {
+            this.style.opacity = '0.8';
+            this.style.transform = 'scale(1.5)';
+            this.style.animationPlayState = 'paused';
+        });
+        
+        icon.addEventListener('mouseleave', function() {
+            this.style.opacity = '0.3';
+            this.style.transform = 'scale(1)';
+            this.style.animationPlayState = 'running';
+        });
+        
+        // Mobile touch
+        icon.addEventListener('touchstart', function() {
+            this.style.opacity = '0.8';
+            this.style.transform = 'scale(1.5)';
+            this.style.animationPlayState = 'paused';
+        });
+        
+        icon.addEventListener('touchend', function() {
+            this.style.opacity = '0.3';
+            this.style.transform = 'scale(1)';
+            this.style.animationPlayState = 'running';
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initTechIcons();
+    
 });
