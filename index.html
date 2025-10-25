@@ -74,9 +74,8 @@
             <h1 class="hero-title-advanced">
                 <span class="title-main">Sabin Rana</span>
                 <span class="title-subtitle terminal-text">
-                <span class="terminal-prompt">$ </span>
+                <span class="terminal-prompt"></span>
                         <span class="typing-text">Cloud Engineer</span>
-                        <span class="cursor">|</span>
                 </span>
             </h1>
             
@@ -386,84 +385,252 @@
         <p class="section-subtitle">Interactive cloud solutions built with AWS services</p>
         
         <div class="projects-grid-3d">
-            <!-- Project 1 -->
-            <div class="project-card-3d" data-tilt>
-                <div class="project-card-inner">
-                    <div class="project-image-hover">
-                        <img src="https://raw.githubusercontent.com/Sabin-Rana/aws-3tier-architecture/main/Architecture_Diagram/AWS%20_3-Tier_Architecture.png" alt="3-Tier Architecture">
-                        <div class="project-overlay">
-                            <button class="view-architecture-btn">
-                                <i class="fas fa-expand"></i>
-                                View Architecture
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="project-content-advanced">
-                        <div class="project-header">
-                            <h3>AWS 3-Tier Architecture</h3>
-                            <div class="project-badge">Production Ready</div>
-                        </div>
-                        
-                        <p class="project-description">
-                            Enterprise-grade web application infrastructure with High Availability, 
-                            Auto Scaling, and Multi-AZ database configuration.
-                        </p>
-                        
-                        <div class="tech-stack-animated">
-                            <div class="tech-tag" data-tech="VPC">
-                                <i class="fas fa-network-wired"></i>
-                                VPC
-                            </div>
-                            <div class="tech-tag" data-tech="EC2">
-                                <i class="fas fa-server"></i>
-                                EC2
-                            </div>
-                            <div class="tech-tag" data-tech="RDS">
-                                <i class="fas fa-database"></i>
-                                RDS
-                            </div>
-                            <div class="tech-tag" data-tech="ALB">
-                                <i class="fas fa-balance-scale"></i>
-                                ALB
-                            </div>
-                            <div class="tech-tag" data-tech="Auto Scaling">
-                                <i class="fas fa-arrows-alt-v"></i>
-                                Auto Scaling
+            <!-- Project 1 - Enterprise AWS 3-Tier Architecture -->
+                <div class="project-card-3d" data-tilt>
+                    <div class="project-card-inner">
+                        <div class="project-image-hover">
+                            <img src="https://raw.githubusercontent.com/Sabin-Rana/enterprise-aws-3tier-architecture/main/docs/architecture-diagram/aws-3tier-architecture-diagram.png" alt="Enterprise AWS 3-Tier Architecture">
+                            <div class="project-overlay">
+                                <button class="view-architecture-btn">
+                                    <i class="fas fa-expand"></i>
+                                    View Architecture
+                                </button>
                             </div>
                         </div>
-                        
-                        <div class="project-stats">
-                            <div class="stat">
-                                <i class="fas fa-layer-group"></i>
-                                <span>3-Tier</span>
+                        <div class="project-content-advanced">
+                            <div class="project-header">
+                                <h3>Enterprise AWS 3-Tier Architecture</h3>
+                                <div class="project-badge">Production Ready</div>
                             </div>
-                            <div class="stat">
-                                <i class="fas fa-bolt"></i>
-                                <span>HA</span>
+                            
+                            <p class="project-description">
+                                A comprehensive enterprise-grade AWS infrastructure designed and validated through Terraform, demonstrating professional DevOps practices with absolute cost control.<br><br>
+                                
+                                <strong>Key Achievements:</strong><br>
+                                • 57 AWS Resources validated across 6 Terraform modules<br>
+                                • Zero-Cost Validation - Complete infrastructure testing without deployment costs<br>
+                                • Safety-First Approach - 7 automation scripts for cost management<br>
+                                • Production-Ready CI/CD - GitHub Actions with safety controls<br>
+                                • Containerized Applications - Docker for both frontend & backend<br>
+                                • Multi-AZ Architecture - High availability with comprehensive monitoring<br>
+                                • Infrastructure as Code - Complete Terraform automation<br>
+                                • Bash Automation - Comprehensive scripting for deployment safety
+                            </p>
+                            
+                            <div class="tech-stack-animated">
+                                <!-- DevOps & Tools -->
+                                <div class="tech-tag" data-tech="Terraform">
+                                    <i class="fas fa-code"></i>
+                                    Terraform
+                                </div>
+                                <div class="tech-tag" data-tech="Docker">
+                                    <i class="fab fa-docker"></i>
+                                    Docker
+                                </div>
+                                <div class="tech-tag" data-tech="CI/CD">
+                                    <i class="fas fa-rocket"></i>
+                                    CI/CD
+                                </div>
+                                <div class="tech-tag" data-tech="Bash">
+                                    <i class="fas fa-terminal"></i>
+                                    Bash
+                                </div>
+                                <div class="tech-tag" data-tech="GitHub">
+                                    <i class="fab fa-github"></i>
+                                    GitHub
+                                </div>
+                                
+                                <!-- AWS Networking -->
+                                <div class="tech-tag" data-tech="VPC">
+                                    <i class="fas fa-network-wired"></i>
+                                    VPC
+                                </div>
+                                <div class="tech-tag" data-tech="ALB">
+                                    <i class="fas fa-balance-scale"></i>
+                                    ALB
+                                </div>
+                                <div class="tech-tag" data-tech="Internet Gateway">
+                                    <i class="fas fa-globe"></i>
+                                    IGW
+                                </div>
+                                <div class="tech-tag" data-tech="NAT Gateway">
+                                    <i class="fas fa-random"></i>
+                                    NAT
+                                </div>
+                                
+                                <!-- AWS Compute -->
+                                <div class="tech-tag" data-tech="EC2">
+                                    <i class="fas fa-server"></i>
+                                    EC2
+                                </div>
+                                <div class="tech-tag" data-tech="Auto Scaling">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                    Auto Scaling
+                                </div>
+                                
+                                <!-- AWS Database -->
+                                <div class="tech-tag" data-tech="RDS">
+                                    <i class="fas fa-database"></i>
+                                    RDS
+                                </div>
+                                
+                                <!-- AWS Security -->
+                                <div class="tech-tag" data-tech="Security Groups">
+                                    <i class="fas fa-shield-alt"></i>
+                                    Security
+                                </div>
+                                <div class="tech-tag" data-tech="IAM">
+                                    <i class="fas fa-user-lock"></i>
+                                    IAM
+                                </div>
+                                
+                                <!-- AWS Monitoring -->
+                                <div class="tech-tag" data-tech="CloudWatch">
+                                    <i class="fas fa-chart-line"></i>
+                                    Monitoring
+                                </div>
+                                
+                                <!-- Application Stack -->
+                                <div class="tech-tag" data-tech="Node.js">
+                                    <i class="fab fa-node-js"></i>
+                                    Node.js
+                                </div>
+                                <div class="tech-tag" data-tech="React">
+                                    <i class="fab fa-react"></i>
+                                    React
+                                </div>
+                                <div class="tech-tag" data-tech="PostgreSQL">
+                                    <i class="fas fa-database"></i>
+                                    PostgreSQL
+                                </div>
                             </div>
-                            <div class="stat">
-                                <i class="fas fa-shield-alt"></i>
-                                <span>Secure</span>
+
+                            <div class="project-stats">
+                                <div class="stat">
+                                    <i class="fas fa-layer-group"></i>
+                                    <span>3-Tier</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>HA</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Secure</span>
+                                </div>
                             </div>
                         </div>
                         
                         <div class="project-actions">
-                            <a href="https://github.com/Sabin-Rana/aws-3tier-architecture" class="project-link-ripple" target="_blank">
+                            <a href="https://github.com/Sabin-Rana/enterprise-aws-3tier-architecture" class="project-link-ripple" target="_blank">
                                 <i class="fab fa-github"></i>
                                 View Repository
                             </a>
-                            <button class="copy-link-btn" data-url="https://github.com/Sabin-Rana/aws-3tier-architecture">
+                            <button class="copy-link-btn" data-url="https://github.com/Sabin-Rana/enterprise-aws-3tier-architecture">
                                 <i class="fas fa-link"></i>
                                 Copy URL
                             </button>
                         </div>
                     </div>
+                    
+                    <div class="card-glow"></div>
                 </div>
-                
-                <div class="card-glow"></div>
+            <!-- Project 2 - Terraform Infrastructure Automation Mastery -->
+<div class="project-card-3d" data-tilt>
+    <div class="project-card-inner">
+        <div class="project-image-hover">
+            <img src="https://www.hashicorp.com/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F2885%2F1654018417-terraform-workflow.png&w=1920&q=75" alt="Terraform Infrastructure Automation">
+            <div class="project-overlay">
+                <button class="view-architecture-btn">
+                    <i class="fas fa-expand"></i>
+                    View Learning Path
+                </button>
             </div>
-
+        </div>
+        
+        <div class="project-content-advanced">
+            <div class="project-header">
+                <h3>Terraform Infrastructure Automation Mastery</h3>
+                <div class="project-badge">Systematic Learning</div>
+            </div>
+            
+            <p class="project-description">
+                A comprehensive Infrastructure as Code mastery program demonstrating systematic progression from foundational AWS console expertise to advanced Terraform automation. This structured learning journey showcases methodical skill development in cloud infrastructure automation.<br><br>
+                
+                <strong>Key Achievements:</strong><br>
+                • 93% Deployment Efficiency - Automated infrastructure provisioning from 45 minutes to 3 minutes<br>
+                • 10-Phase Structured Curriculum - Progressive mastery from basic to production-grade patterns<br>
+                • 8 Foundational Implementations - Deep AWS service understanding before automation<br>
+                • Enterprise-Grade Safety - Automated cost controls and security compliance<br>
+                • Production Documentation - Comprehensive troubleshooting and implementation guides<br>
+                • Real-World Scenarios - Documented solutions for complex infrastructure challenges
+            </p>
+            
+            <div class="tech-stack-animated">
+                <div class="tech-tag" data-tech="Terraform">
+                    <i class="fas fa-code"></i>
+                    Terraform IaC
+                </div>
+                <div class="tech-tag" data-tech="AWS">
+                    <i class="fab fa-aws"></i>
+                    AWS Cloud
+                </div>
+                <div class="tech-tag" data-tech="Automation">
+                    <i class="fas fa-robot"></i>
+                    Automation
+                </div>
+                <div class="tech-tag" data-tech="CI/CD">
+                    <i class="fas fa-sync-alt"></i>
+                    CI/CD Pipelines
+                </div>
+                <div class="tech-tag" data-tech="Security">
+                    <i class="fas fa-shield-alt"></i>
+                    Security First
+                </div>
+                <div class="tech-tag" data-tech="Cost Optimization">
+                    <i class="fas fa-dollar-sign"></i>
+                    Cost Control
+                </div>
+                <div class="tech-tag" data-tech="Bash">
+                    <i class="fas fa-terminal"></i>
+                    Bash Scripting
+                </div>
+                <div class="tech-tag" data-tech="GitHub">
+                    <i class="fab fa-github"></i>
+                    GitHub Actions
+                </div>
+            </div>
+            
+            <div class="project-stats">
+                <div class="stat">
+                    <i class="fas fa-road"></i>
+                    <span>10 Phases</span>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>93% Faster</span>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>8 Foundations</span>
+                </div>
+            </div>
+            
+            <div class="project-actions">
+                <a href="https://github.com/Sabin-Rana/terraform-learning-journey" class="project-link-ripple" target="_blank">
+                    <i class="fab fa-github"></i>
+                    View Journey
+                </a>
+                <button class="copy-link-btn" data-url="https://github.com/Sabin-Rana/terraform-learning-journey">
+                    <i class="fas fa-link"></i>
+                    Copy URL
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-glow"></div>
+</div> 
             <!-- Project 2 -->
             <div class="project-card-3d" data-tilt>
                 <div class="project-card-inner">
@@ -664,13 +831,13 @@
 
                 <article class="blog-card">
                     <div class="blog-image">
-                        <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="AWS Projects">
+                        <img src="assets/images/blog/3tier-architecture.png" alt="From $10 Scare to Zero-Cost Mastery">
                     </div>
                     <div class="blog-content">
-                        <h3>Converting Console Projects to Terraform</h3>
-                        <p class="blog-date">Coming Soon</p>
+                        <h3>From $10 Scare to Zero-Cost Mastery: My AWS 3-Tier Architecture Journey</h3>
+                        <p class="blog-date">October 24, 2025</p>
                         <p>The process of taking my existing AWS console projects and converting them to reproducible Infrastructure as Code with Terraform modules...</p>
-                        <a href="https://sabin-codeops.hashnode.dev/starting-my-terraform-journey-from-aws-console-to-infrastructure-as-code" class="blog-link" target="_blank">Read More <i class="fas fa-arrow-right"></i></a>
+                        <a href="https://sabin-codeops.hashnode.dev/from-10-scare-to-zero-cost-mastery-my-aws-3-tier-architecture-journey" class="blog-link" target="_blank">Read More <i class="fas fa-arrow-right"></i></a>
                 </article>
             </div>
 
@@ -783,7 +950,7 @@
     <footer class="footer">
         <div class="container">
             <p>&copy; 2025 Sabin Rana. All rights reserved.</p>
-            <p>Cloud Architect • Network Security Specialist</p>
+            <p>AWS Certified • Cloud Engineer</p>
         </div>
     </footer>
 
