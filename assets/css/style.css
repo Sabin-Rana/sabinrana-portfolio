@@ -4452,25 +4452,3 @@ section {
     display: inline-block !important;
 }
 
-/* GitHub Button Styles */
-.btn-github-3d {
-    background: linear-gradient(145deg, #333333, #24292e);
-    color: white;
-    border: 2px solid #444d56;
-    box-shadow: 0 6px 0 #1b1f23,
-                0 8px 10px rgba(0,0,0,0.3);
-}
-
-.btn-github-3d:hover {
-    background: linear-gradient(145deg, #24292e, #333333);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 0 #1b1f23,
-                0 12px 20px rgba(0,0,0,0.4);
-    color: white;
-}
-
-.btn-github-3d:active {
-    transform: translateY(4px);
-    box-shadow: 0 2px 0 #1b1f23,
-                0 4px 6px rgba(0,0,0,0.2);
-}
