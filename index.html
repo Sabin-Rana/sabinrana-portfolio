@@ -3,909 +3,1112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sabin Rana - Cloud & Security Professional</title>
+    <title>Sabin Rana | Cloud Engineer & Security Specialist</title>
     <meta name="description" content="AWS Solutions Architect | Cisco Certified Specialist - Enterprise Core | Cloud Infrastructure Specialist">
     
-    <!-- External CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Font Awesome -->
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --aws-orange: #FF9900;
+            --aws-dark: #232F3E;
+            --bg-dark: #0f1117;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a202c; }
+        ::-webkit-scrollbar-thumb { background: var(--aws-orange); border-radius: 4px; }
+
+        /* 3D Canvas Layer */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #1a202c 0%, #0f1117 100%);
+            pointer-events: none;
+        }
+
+        /* Glass Panels */
+        .glass-panel {
+            background: rgba(23, 28, 38, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
+        .glass-panel:hover {
+            border-color: rgba(255, 153, 0, 0.5);
+            box-shadow: 0 0 20px rgba(255, 153, 0, 0.2);
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Typing Cursor */
+        .cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: var(--aws-orange);
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* Timeline */
+        .timeline-line {
+            position: absolute;
+            left: 19px;
+            top: 40px;
+            bottom: -20px;
+            width: 2px;
+            background: #374151;
+        }
+        .timeline-item:last-child .timeline-line { display: none; }
+
+        /* Reactive Image Zoom */
+        .reactive-img-container { 
+            overflow: hidden; 
+            border-radius: 0.5rem; 
+            position: relative;
+        }
+        .reactive-img-container img { 
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .group:hover .reactive-img-container img { 
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        /* Project Card 3D Hover */
+        .project-card {
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .project-card:hover {
+            transform: translateY(-10px) rotateX(2deg);
+        }
+
+        /* Certification Badges */
+        .cert-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255, 153, 0, 0.1);
+            border: 1px solid rgba(255, 153, 0, 0.3);
+            border-radius: 20px;
+            font-size: 14px;
+            margin: 4px;
+        }
+
+        /* Cloud Title Animation */
+        .cloud-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .cloud-letter {
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.1s);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Architecture Image Full Display */
+        .architecture-image {
+            width: 100%;
+            height: 280px;
+            object-fit: contain;
+            background: #1a202c;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        /* White Background for Icons */
+        .white-bg-icon {
+            background: white;
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .mobile-stack { flex-direction: column; }
+            .mobile-text-center { text-align: center; }
+            .mobile-p-4 { padding: 1rem; }
+            .mobile-space-y-4 > * + * { margin-top: 1rem; }
+            
+            /* Enhanced Mobile Responsiveness */
+            .cloud-title {
+                font-size: 1.75rem !important;
+                text-align: center;
+            }
+            
+            .cloud-letter {
+                font-size: 1.75rem !important;
+            }
+            
+            .glass-panel {
+                margin: 0.5rem;
+                padding: 1rem;
+            }
+            
+            .project-card {
+                margin-bottom: 1.5rem;
+            }
+            
+            .mobile-text-sm {
+                font-size: 0.875rem;
+            }
+            
+            .mobile-p-3 {
+                padding: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cloud-title {
+                font-size: 1.5rem !important;
+            }
+            
+            .cloud-letter {
+                font-size: 1.5rem !important;
+            }
+            
+            .grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
+
+    <!-- 3D Background -->
+    <div id="canvas-container"></div>
+
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-    <a href="#home" class="network-logo">
-        <span class="logo-text">Sabin Rana</span>
-        <svg class="network-lines" viewBox="0 0 200 40">
-            <path class="network-path" d="M20,20 L40,20 L60,25 L80,20 L100,25 L120,20 L140,25 L160,20"/>
-            <circle class="network-node" cx="20" cy="20" r="2"/>
-            <circle class="network-node" cx="40" cy="20" r="2"/>
-            <circle class="network-node" cx="60" cy="25" r="2"/>
-            <circle class="network-node" cx="80" cy="20" r="2"/>
-            <circle class="network-node" cx="100" cy="25" r="2"/>
-            <circle class="network-node" cx="120" cy="20" r="2"/>
-            <circle class="network-node" cx="140" cy="25" r="2"/>
-            <circle class="network-node" cx="160" cy="20" r="2"/>
-        </svg>
-    </a>
-</div>
-            <ul class="nav-menu">
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#certifications">Qualifications</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+    <nav class="fixed w-full z-50 bg-[#0f1117]/90 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <!-- Brand -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-[#232F3E] rounded flex items-center justify-center border border-gray-700 group-hover:border-[#FF9900] transition-colors">
+                    <i class="fab fa-aws text-[#FF9900] text-xl"></i>
+                </div>
+                <div class="leading-none">
+                    <div class="font-bold text-lg tracking-wide">SABIN RANA</div>
+                    <div class="text-[10px] text-[#FF9900] font-mono tracking-wider">CLOUD ENGINEER</div>
+                </div>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex gap-6 text-sm font-medium text-gray-400">
+                <a href="#about" class="hover:text-white transition-colors">About</a>
+                <a href="#experience" class="hover:text-white transition-colors">Experience</a>
+                <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-white transition-colors">Projects</a>
+                <a href="#qualifications" class="hover:text-white transition-colors">Qualifications</a>
+                <a href="#blog" class="hover:text-white transition-colors">Blog</a>
+                <a href="#contact" class="text-[#FF9900] hover:text-white transition-colors">Contact</a>
             </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-white text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-<section id="home" class="hero-cloud">
-    <div class="cloud-background">
-        <div class="cloud cloud-1"></div>
-        <div class="cloud cloud-2"></div>
-        <div class="cloud cloud-3"></div>
-        <div class="cloud cloud-4"></div>
-        <div class="floating-shape shape-1"></div>
-        <div class="floating-shape shape-2"></div>
-        <div class="floating-shape shape-3"></div>
-        <div class="binary-rain"></div>
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#0f1117] z-40 flex flex-col justify-center items-center space-y-8 md:hidden">
+        <a href="#about" class="text-2xl font-bold hover:text-[#FF9900] mobile-link">About</a>
+        <a href="#experience" class="text-2xl font-bold hover:text-[#FF9900] mobile-link">Experience</a>
+        <a href="#skills" class="text-2xl font-bold hover:text-[#FF9900] mobile-link">Skills</a>
+        <a href="#projects" class="text-2xl font-bold hover:text-[#FF9900] mobile-link">Projects</a>
+        <a href="#qualifications" class="text-2xl font-bold hover:text-[#FF9900] mobile-link">Qualifications</a>
+        <a href="#blog" class="text-2xl font-bold hover:text-[#FF9900] mobile-link">Blog</a>
+        <a href="#contact" class="text-2xl font-bold text-[#FF9900] mobile-link">Contact</a>
     </div>
-    
-    <div class="container">
-        <div class="hero-content-advanced">
-            <div class="hero-badge">
-                <span>🏆AWS Certified</span>
-            </div>
+
+    <!-- HERO SECTION - KEEPING ORIGINAL NEW DESIGN -->
+    <section class="min-h-screen pt-32 pb-16 flex items-center relative justify-center text-center">
+        <div class="max-w-4xl mx-auto px-6 w-full flex flex-col items-center justify-center z-10">
             
-            <h1 class="hero-title-advanced">
-                <span class="title-main">Sabin Rana</span>
-                <span class="title-subtitle terminal-text">
-                <span class="terminal-prompt"></span>
-                        <span class="typing-text">Cloud Engineer</span>
-                </span>
+            <!-- System Status Badge -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded bg-[#232F3E] border border-gray-700 text-[#FF9900] text-xs font-mono font-bold animate-pulse">
+                <i class="fas fa-check-circle"></i> SYSTEM ONLINE
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-4">
+                SABIN RANA<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9900] to-yellow-400">CLOUD ENGINEER</span>
             </h1>
-            
-            <div class="hero-tags">
-                <span class="hero-tag">AWS Certified Solutions Architect - Associate</span>
-                <span class="hero-tag">Cisco Certified Specialist - Enterprise Core</span>
-                <span class="hero-tag">Master of Science in IT & Applied Security</span>
+
+            <!-- Typing Effect -->
+            <div class="text-xl text-gray-400 font-mono h-8 flex items-center justify-center mb-8">
+                <span class="text-[#FF9900] mr-2">></span>
+                <span id="typewriter" class="cursor"></span>
             </div>
-            
-            <p class="hero-description-advanced">
+
+            <!-- Creative AWS Badge Display (Centered) -->
+            <div class="flex flex-col items-center gap-4 py-6 mb-8">
+                 <div class="relative group cursor-pointer">
+                    <div class="absolute inset-0 bg-[#FF9900] rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity animate-pulse"></div>
+                    <div class="relative w-24 h-24 bg-[#232F3E] border-2 border-[#FF9900] rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(255,153,0,0.3)] transform hover:scale-110 transition-transform">
+                        <i class="fab fa-aws text-6xl text-white"></i>
+                    </div>
+                    <div class="absolute -bottom-2 bg-green-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-full border border-white">
+                        CERTIFIED
+                    </div>
+                 </div>
+                 <div class="text-center">
+                     <h3 class="font-bold text-white text-xl">AWS Certified Solutions Architect-Associate</h3>
+                 </div>
+            </div>
+
+            <p class="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto mb-10">
                 Cloud Architect bridging enterprise networking with modern cloud infrastructure. 
                 Specializing in Infrastructure as Code and security-first solutions.
             </p>
-            <!-- Updated Stats Section (No Numbers) -->
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-icon">☁️</div>
-                    <div class="stat-label">AWS Projects</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">🌐</div>
-                    <div class="stat-label">Network Infrastructure</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">🔒</div>
-                    <div class="stat-label">Security First</div>
-                </div>
-            </div>
-            
-            <div class="hero-cta-advanced">
-                <a href="#projects" class="btn-3d btn-primary-3d">
-                    <i class="fas fa-rocket"></i>
-                    View My Projects
+
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#projects" class="px-8 py-4 bg-[#FF9900] text-black font-bold rounded shadow-[0_0_20px_rgba(255,153,0,0.3)] hover:shadow-[0_0_30px_rgba(255,153,0,0.5)] hover:-translate-y-1 transition-all">
+                    View Projects
                 </a>
-                <a href="#contact" class="btn-3d btn-secondary-3d">
-                    <i class="fas fa-paper-plane"></i>
-                    Connect With Me
+                <a href="#contact" class="px-8 py-4 border border-gray-600 text-white font-bold rounded hover:bg-white/10 transition-all">
+                    Contact Me
                 </a>
-            </div>
-            
-            <div class="scroll-indicator">
-                <div class="scroll-arrow"></div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-    <!-- Enhanced About Section -->
-<section id="about" class="about-enhanced cloud-bg-section">
-    <div class="container">
-        <h2 class="section-title-glitch">About Me</h2>
-        
-        <div class="about-card-3d">
-            <div class="about-content-3d">
-                <div class="profile-section">
-                    <div class="profile-image-hover magnetic-element">
-                        <div class="image-container">
-                            <img src="assets/images/profile/sabinrana.PNG" alt="Sabin Rana" class="profile-img">
-                            <div class="image-overlay">
-                                <div class="tech-icons">
-                                    <i class="fab fa-aws"></i>
-                                    <i class="fas fa-cloud"></i>
-                                    <i class="fas fa-shield-alt"></i>
-                                    <i class="fas fa-network-wired"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-glow"></div>
-                    </div>
-                    
-                    <div class="profile-info">
-                        <h3>Cloud Engineer</h3>
-                        <div class="cert-badges">
-                            <span class="cert-badge aws-badge">
-                                <i class="fab fa-aws"></i>
-                                AWS Solutions Architect - Associate
-                            </span>
-                            <span class="cert-badge cisco-badge">
-                                <i class="fas fa-network-wired"></i>
-                                Cisco Certified Specialist - Enterprise Core
-                            </span>
-                        </div>
+    <!-- ABOUT SECTION - UPDATED -->
+    <section id="about" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="glass-panel rounded-2xl p-6 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 items-center mobile-stack">
+                <!-- Reactive Profile Image Container -->
+                <div class="w-full md:w-1/3 group cursor-pointer">
+                    <div class="reactive-img-container relative rounded-lg shadow-2xl ring-1 ring-white/10 group-hover:ring-[#FF9900] transition-all">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+                        <img src="assets/images/profile/sabinrana.PNG" onerror="this.src='https://placehold.co/400x400/1a202c/FF9900?text=Profile+Image'" alt="Sabin Rana" class="w-full h-full object-cover aspect-square">
                     </div>
                 </div>
                 
-                <div class="about-text-enhanced">
-                    <p class="lead-text">
-                        Cloud Engineer with AWS Solutions Architect Associate certification and Cisco Certified Specialist - Enterprise Core networking expertise, 
-                        complemented by a Master's in Applied Security.
+                <div class="w-full md:w-2/3 mobile-text-center">
+                    <h2 class="cloud-title text-3xl font-bold text-white mb-2">
+                        <span class="cloud-letter" style="--i: 0">A</span>
+                        <span class="cloud-letter" style="--i: 1">b</span>
+                        <span class="cloud-letter" style="--i: 2">o</span>
+                        <span class="cloud-letter" style="--i: 3">u</span>
+                        <span class="cloud-letter" style="--i: 4">t</span>
+                        <span class="cloud-letter space" style="--i: 5"></span>
+                        <span class="cloud-letter" style="--i: 6">M</span>
+                        <span class="cloud-letter" style="--i: 7">e</span>
+                    </h2>
+                    <div class="h-1 w-20 bg-[#FF9900] mb-6 mx-auto md:mx-0"></div>
+                    
+                    <p class="text-gray-300 leading-relaxed mb-6">
+                        I am a <span class="text-white font-bold">Cloud Engineer</span> and <span class="text-white font-bold">Security Specialist</span>. 
+                        I architect enterprise-grade cloud infrastructure with robust security foundations, bridging networking expertise with modern cloud technologies.
                     </p>
-                    
-                    <div class="about-details">
-                        <p>
-                        I architect enterprise-grade cloud infrastructure with robust security foundations, bridging networking 
-                        expertise with modern cloud technologies. Developed multiple enterprise-validated AWS projects through 
-                        comprehensive console implementations.
-                        </p>
-                                            
-                        <p>
-                            This hands-on experience now informs my Infrastructure as Code approach, transforming proven designs 
-                            into automated, version-controlled deployments with Terraform. My distinctive advantage lies in combining 
-                            enterprise networking with cloud security principles.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="tech-stack">
-                    <h4>Core Technologies</h4>
-                    <div class="tech-grid">
-                        <div class="tech-item magnetic-element" data-tech="AWS">
+                    <p class="text-gray-300 leading-relaxed mb-8">
+                        Developed multiple enterprise-validated AWS projects through comprehensive console implementations. 
+                        This hands-on experience informs my <span class="text-[#FF9900]">Infrastructure as Code</span> approach, 
+                        transforming proven designs into automated, version-controlled deployments with Terraform.
+                    </p>
+
+                    <!-- Certifications from Old Portfolio -->
+                    <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-6">
+                        <span class="cert-badge">
                             <i class="fab fa-aws"></i>
-                            <span>AWS</span>
-                        </div>
-                        <div class="tech-item magnetic-element" data-tech="Terraform">
-                            <i class="fas fa-code"></i>
-                            <span>Terraform</span>
-                        </div>
-                        <div class="tech-item magnetic-element" data-tech="Networking">
+                            AWS Solutions Architect - Associate
+                        </span>
+                        <span class="cert-badge" style="border-color: rgba(0, 112, 210, 0.3); background: rgba(0, 112, 210, 0.1);">
                             <i class="fas fa-network-wired"></i>
-                            <span>Networking</span>
+                            Cisco Certified Specialist - Enterprise Core
+                        </span>
+                        <span class="cert-badge" style="border-color: rgba(147, 51, 234, 0.3); background: rgba(147, 51, 234, 0.1);">
+                            <i class="fas fa-graduation-cap"></i>
+                            Master of Science in IT & Applied Security
+                        </span>
+                    </div>
+
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-[#0f1117] p-4 rounded border border-gray-800 text-center hover:border-[#FF9900] transition-colors">
+                            <i class="fab fa-aws text-3xl text-[#FF9900] mb-2"></i>
+                            <div class="font-bold">AWS Projects</div>
                         </div>
-                        <div class="tech-item magnetic-element" data-tech="Security">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Security</span>
+                        <div class="bg-[#0f1117] p-4 rounded border border-gray-800 text-center hover:border-blue-400 transition-colors">
+                            <i class="fas fa-network-wired text-3xl text-blue-400 mb-2"></i>
+                            <div class="font-bold">Network Infra</div>
+                        </div>
+                        <div class="bg-[#0f1117] p-4 rounded border border-gray-800 text-center hover:border-green-400 transition-colors">
+                            <i class="fas fa-shield-alt text-3xl text-green-400 mb-2"></i>
+                            <div class="font-bold">Security First</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-    <!-- Experience Section -->
-<section id="experience" class="experience">
-    <div class="container">
-        <h2 class="section-title">Professional Journey</h2>
-        <p class="section-subtitle">Network professional with cloud infrastructure expertise</p>
-        
-        <div class="experience-timeline">
-            <!-- Current Role -->
-            <div class="experience-item">
-                <div class="timeline-marker current"></div>
-                <div class="experience-content">
-                    <div class="role-header">
-                        <h3>Network Security Engineer</h3>
-                        <span class="role-period">July 2021 - Present</span>
-                    </div>
-                    <div class="company-info">
-                        <div>
-                            <h4>Creatu Developers</h4>
-                            <a href="https://creatudevelopers.com/" target="_blank" class="company-link">
-                                <i class="fas fa-external-link-alt"></i> Visit Website
-                            </a>
-                        </div>
-                    </div>
-                    <div class="role-description">
-                        <p>Leading network security implementations and infrastructure design for enterprise clients, ensuring robust security postures and optimal network performance.</p>
-                    </div>
-                    <div class="achievements">
-                        <h5>Key Achievements:</h5>
-                        <ul>
-                            <li>Designed and implemented secure network architectures for multiple enterprise clients</li>
-                            <li>Reduced security vulnerabilities by 40% through proactive monitoring and hardening</li>
-                            <li>Led network infrastructure upgrades improving performance by 60%</li>
-                            <li>Implemented comprehensive documentation and reporting systems</li>
-                        </ul>
-                    </div>
-                    <div class="technologies">
-                        <span class="tech-tag">Network Security</span>
-                        <span class="tech-tag">Cisco</span>
-                        <span class="tech-tag">Firewalls</span>
-                        <span class="tech-tag">VPN</span>
-                        <span class="tech-tag">Monitoring</span>
-                    </div>
-                </div>
+    <!-- EXPERIENCE SECTION - UPDATED WITH COMPANY LINKS -->
+    <section id="experience" class="py-20 bg-black/20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <h2 class="cloud-title text-4xl font-bold text-white mb-4">
+                    <span class="cloud-letter" style="--i: 0">P</span>
+                    <span class="cloud-letter" style="--i: 1">r</span>
+                    <span class="cloud-letter" style="--i: 2">o</span>
+                    <span class="cloud-letter" style="--i: 3">f</span>
+                    <span class="cloud-letter" style="--i: 4">e</span>
+                    <span class="cloud-letter" style="--i: 5">s</span>
+                    <span class="cloud-letter" style="--i: 6">s</span>
+                    <span class="cloud-letter" style="--i: 7">i</span>
+                    <span class="cloud-letter" style="--i: 8">o</span>
+                    <span class="cloud-letter" style="--i: 9">n</span>
+                    <span class="cloud-letter" style="--i: 10">a</span>
+                    <span class="cloud-letter" style="--i: 11">l</span>
+                    <span class="cloud-letter space" style="--i: 12"></span>
+                    <span class="cloud-letter" style="--i: 13">E</span>
+                    <span class="cloud-letter" style="--i: 14">x</span>
+                    <span class="cloud-letter" style="--i: 15">p</span>
+                    <span class="cloud-letter" style="--i: 16">e</span>
+                    <span class="cloud-letter" style="--i: 17">r</span>
+                    <span class="cloud-letter" style="--i: 18">i</span>
+                    <span class="cloud-letter" style="--i: 19">e</span>
+                    <span class="cloud-letter" style="--i: 20">n</span>
+                    <span class="cloud-letter" style="--i: 21">c</span>
+                    <span class="cloud-letter" style="--i: 22">e</span>
+                </h2>
+                <div class="h-1 w-24 bg-[#FF9900] mx-auto rounded"></div>
             </div>
 
-            <!-- Previous Role -->
-            <div class="experience-item">
-                <div class="timeline-marker"></div>
-                <div class="experience-content">
-                    <div class="role-header">
-                        <h3>IT Infrastructure & Network Officer</h3>
-                        <span class="role-period">November 2019 - March 2021</span>
-                    </div>
-                    <div class="company-info">
-                        <div>
-                            <h4>Herald College Kathmandu</h4>
-                            <a href="https://heraldcollege.edu.np/" target="_blank" class="company-link">
-                                <i class="fas fa-external-link-alt"></i> Visit Website
-                            </a>
-                        </div>
-                    </div>
-                    <div class="role-description">
-                        <p>Managed complete IT infrastructure for educational institution, supporting 500+ users and ensuring 99.9% uptime for critical academic systems.</p>
-                    </div>
-                    <div class="achievements">
-                        <h5>Key Achievements:</h5>
-                        <ul>
-                            <li>Managed network infrastructure supporting 500+ daily users</li>
-                            <li>Implemented wireless network optimization improving coverage by 35%</li>
-                            <li>Reduced system downtime through proactive maintenance and monitoring</li>
-                            <li>Led successful migration to new server infrastructure</li>
-                            <li>Provided training and support for faculty and staff</li>
-                        </ul>
-                    </div>
-                    <div class="technologies">
-                        <span class="tech-tag">Network Administration</span>
-                        <span class="tech-tag">Server Management</span>
-                        <span class="tech-tag">Wireless Networks</span>
-                        <span class="tech-tag">User Support</span>
-                        <span class="tech-tag">System Upgrades</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-  <!-- Enhanced Skills Section -->
-<section id="skills" class="skills-enhanced cloud-bg-section">
-    <div class="container">
-        <h2 class="section-title">What I'm Working With</h2>
-        
-        <div class="skills-grid-enhanced">
-            <div class="skill-category-card">
-                <div class="category-header">
-                    <div class="category-icon"></div>
-                    <h3>My Cloud Toolkit</h3>
-                </div>
-                <div class="skill-items">
-                    <div class="skill-item-enhanced">
-                        <span class="skill-name">AWS Core Services</span>
-                        <p>Building with EC2, S3, VPC, RDS - services I use daily</p>
-                    </div>
-                    <div class="skill-item-enhanced">
-                        <span class="skill-name">Terraform & Infrastructure as Code</span>
-                        <p>Automating cloud infrastructure with reusable modules</p>
-                    </div>
-                    <div class="skill-item-enhanced">
-                        <span class="skill-name">CI/CD & Docker</span>
-                        <p>Implementing GitHub Actions pipelines with containerization</p>
-                    </div>
-                    <div class="skill-item-enhanced">
-                        <span class="skill-name">Python & Automation</span>
-                        <p>Developing scripts for AWS automation and Lambda functions</p>
-                    </div>
-                    <div class="skill-item-enhanced">
-                        <span class="skill-name">Bash & Linux</span>
-                        <p>Server administration, scripting, and DevOps automation</p>
-                    </div>
-                    <div class="skill-item-enhanced">
-                        <span class="skill-name">Networking & Security</span>
-                        <p>Designing secure VPCs and implementing IAM policies</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skill-category-card">
-                <div class="category-header">
-                    <div class="category-icon"></div>
-                    <h3>My Foundation</h3>
-                </div>
-                <div class="skill-items">
-                    <div class="skill-item-enhanced">
-                        <span class="skill-name">Networking Expertise</span>
-                        <p>Cisco Certified Specialist - Enterprise Core knowledge applied to cloud networking design</p>
-                    </div>
-                    <div class="skill-item-enhanced">
-                        <span class="skill-name">Security Mindset</span>
-                        <p>MScIT in Applied Security shaping my approach to cloud architecture</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <!-- Advanced Featured Projects Section -->
-<section id="projects" class="projects-advanced">
-    <div class="container">
-        <div style="text-align: center; width: 100%;">
-    <h2 class="section-title-cloud">
-        <span class="cloud-letter">F</span>
-        <span class="cloud-letter">e</span>
-        <span class="cloud-letter">a</span>
-        <span class="cloud-letter">t</span>
-        <span class="cloud-letter">u</span>
-        <span class="cloud-letter">r</span>
-        <span class="cloud-letter">e</span>
-        <span class="cloud-letter">d</span>
-        <span class="cloud-letter space"></span>
-        <span class="cloud-letter">A</span>
-        <span class="cloud-letter">r</span>
-        <span class="cloud-letter">c</span>
-        <span class="cloud-letter">h</span>
-        <span class="cloud-letter">i</span>
-        <span class="cloud-letter">t</span>
-        <span class="cloud-letter">e</span>
-        <span class="cloud-letter">c</span>
-        <span class="cloud-letter">t</span>
-        <span class="cloud-letter">u</span>
-        <span class="cloud-letter">r</span>
-        <span class="cloud-letter">e</span>
-    </h2>
-</div>
-        <p class="section-subtitle">Interactive cloud solutions built with AWS services</p>
-        
-        <div class="projects-grid-3d">
-         <!-- Project 1.1 - Enterprise Serverless Architecture -->
-              <div class="project-card-3d" data-tilt>
-                <div class="project-card-inner">
-                    <div class="project-image-hover">
-                        <img src="https://raw.githubusercontent.com/Sabin-Rana/Enterprise-AWS-Serverless-IaC-Platform/main/docs/architecture/aws-serverless-iac-architecture-diagram.png" alt="Enterprise AWS Serverless IaC Platform">
-                        <div class="project-overlay">
-                            <button class="view-architecture-btn">
-                                <i class="fas fa-expand"></i>
-                                View Architecture
-                            </button>
-                        </div>
+            <div class="space-y-0">
+                <!-- Job 1 -->
+                <div class="timeline-item relative pl-12 pb-12">
+                    <div class="timeline-line"></div>
+                    <div class="absolute left-0 top-0 w-10 h-10 bg-[#232F3E] border-2 border-[#FF9900] rounded-full flex items-center justify-center z-10 shadow-[0_0_10px_#FF9900]">
+                        <i class="fas fa-briefcase text-[#FF9900] text-sm"></i>
                     </div>
                     
-                    <div class="project-content-advanced">
-                        <div class="project-header">
-                            <h3>Enterprise AWS Serverless IaC Platform</h3>
-                            <div class="project-badge">Serverless First</div>
+                    <div class="glass-panel p-6 rounded-xl hover:border-[#FF9900] transition-colors">
+                        <div class="flex flex-col sm:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Network Security Engineer</h3>
+                            <span class="text-[#FF9900] font-mono text-sm bg-[#FF9900]/10 px-2 py-1 rounded">July 2021 - Present</span>
                         </div>
-                        
-                        <p class="project-description">
-                            A comprehensive enterprise-grade AWS serverless platform demonstrating modern cloud architecture with AWS Config compliance, drift detection, and full-stack application readiness - all validated through strategic zero-cost methodology.<br><br>
-                            
-                            <strong>Key Achievements:</strong><br>
-                            • 30 AWS Resources architected with serverless-first design<br>
-                            • AWS Config Compliance rules for security monitoring<br>
-                            • Complete Serverless Application with React frontend and Lambda backend<br>
-                            • Zero-Cost Validation via comprehensive Terraform planning<br>
-                            • 4 CI/CD Workflows with safety-first validation<br>
-                            • Drift Detection System with real-time change monitoring<br>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+                            <h4 class="text-gray-400 font-bold">Creatu Developers</h4>
+                            <a href="https://creatudevelopers.com/" target="_blank" class="text-[#FF9900] text-sm hover:underline flex items-center gap-1 mt-1 sm:mt-0">
+                                <i class="fas fa-external-link-alt text-xs"></i> Visit Website
+                            </a>
+                        </div>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li><i class="fas fa-chevron-right text-[#FF9900] text-xs mr-2"></i> Leading network security implementations and infrastructure design for enterprise clients.</li>
+                            <li><i class="fas fa-chevron-right text-[#FF9900] text-xs mr-2"></i> Reduced security vulnerabilities by 40% through proactive monitoring and hardening.</li>
+                            <li><i class="fas fa-chevron-right text-[#FF9900] text-xs mr-2"></i> Led network infrastructure upgrades improving performance by 60%.</li>
+                            <li><i class="fas fa-chevron-right text-[#FF9900] text-xs mr-2"></i> Implemented comprehensive documentation and reporting systems.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Job 2 -->
+                <div class="timeline-item relative pl-12 pb-12">
+                    <div class="timeline-line"></div>
+                    <div class="absolute left-0 top-0 w-10 h-10 bg-[#232F3E] border-2 border-gray-600 rounded-full flex items-center justify-center z-10">
+                        <i class="fas fa-building text-gray-400 text-sm"></i>
+                    </div>
+                    
+                    <div class="glass-panel p-6 rounded-xl hover:border-gray-500 transition-colors">
+                        <div class="flex flex-col sm:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">IT Infrastructure & Network Officer</h3>
+                            <span class="text-gray-400 font-mono text-sm bg-gray-800 px-2 py-1 rounded">Nov 2019 - Mar 2021</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+                            <h4 class="text-gray-400 font-bold">Herald College Kathmandu</h4>
+                            <a href="https://heraldcollege.edu.np/" target="_blank" class="text-blue-400 text-sm hover:underline flex items-center gap-1 mt-1 sm:mt-0">
+                                <i class="fas fa-external-link-alt text-xs"></i> Visit Website
+                            </a>
+                        </div>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li><i class="fas fa-chevron-right text-gray-500 text-xs mr-2"></i> Managed complete IT infrastructure supporting 500+ users.</li>
+                            <li><i class="fas fa-chevron-right text-gray-500 text-xs mr-2"></i> Ensured 99.9% uptime for critical academic systems.</li>
+                            <li><i class="fas fa-chevron-right text-gray-500 text-xs mr-2"></i> Implemented wireless network optimization improving coverage by 35%.</li>
+                            <li><i class="fas fa-chevron-right text-gray-500 text-xs mr-2"></i> Led successful migration to new server infrastructure.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <h2 class="cloud-title text-4xl font-bold text-white mb-4">
+                    <span class="cloud-letter" style="--i: 0">W</span>
+                    <span class="cloud-letter" style="--i: 1">h</span>
+                    <span class="cloud-letter" style="--i: 2">a</span>
+                    <span class="cloud-letter" style="--i: 3">t</span>
+                    <span class="cloud-letter space" style="--i: 4"></span>
+                    <span class="cloud-letter" style="--i: 5">I</span>
+                    <span class="cloud-letter" style="--i: 6">'</span>
+                    <span class="cloud-letter" style="--i: 7">m</span>
+                    <span class="cloud-letter space" style="--i: 8"></span>
+                    <span class="cloud-letter" style="--i: 9">W</span>
+                    <span class="cloud-letter" style="--i: 10">o</span>
+                    <span class="cloud-letter" style="--i: 11">r</span>
+                    <span class="cloud-letter" style="--i: 12">k</span>
+                    <span class="cloud-letter" style="--i: 13">i</span>
+                    <span class="cloud-letter" style="--i: 14">n</span>
+                    <span class="cloud-letter" style="--i: 15">g</span>
+                    <span class="cloud-letter space" style="--i: 16"></span>
+                    <span class="cloud-letter" style="--i: 17">W</span>
+                    <span class="cloud-letter" style="--i: 18">i</span>
+                    <span class="cloud-letter" style="--i: 19">t</span>
+                    <span class="cloud-letter" style="--i: 20">h</span>
+                </h2>
+                <p class="text-gray-400">My Cloud Toolkit & Foundation</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 text-center">
+                <!-- Skill Items -->
+                <div class="glass-panel p-4 md:p-6 rounded-xl hover:-translate-y-2 transition-transform group">
+                    <i class="fab fa-aws text-3xl md:text-4xl text-[#FF9900] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <div class="font-bold text-sm md:text-base">AWS</div>
+                </div>
+                <div class="glass-panel p-4 md:p-6 rounded-xl hover:-translate-y-2 transition-transform group">
+                    <i class="fas fa-code text-3xl md:text-4xl text-purple-400 mb-3 group-hover:scale-110 transition-transform"></i>
+                    <div class="font-bold text-sm md:text-base">Terraform</div>
+                </div>
+                <div class="glass-panel p-4 md:p-6 rounded-xl hover:-translate-y-2 transition-transform group">
+                    <i class="fab fa-docker text-3xl md:text-4xl text-blue-400 mb-3 group-hover:scale-110 transition-transform"></i>
+                    <div class="font-bold text-sm md:text-base">Docker</div>
+                </div>
+                <div class="glass-panel p-4 md:p-6 rounded-xl hover:-translate-y-2 transition-transform group">
+                    <i class="fab fa-python text-3xl md:text-4xl text-yellow-400 mb-3 group-hover:scale-110 transition-transform"></i>
+                    <div class="font-bold text-sm md:text-base">Python</div>
+                </div>
+                <div class="glass-panel p-4 md:p-6 rounded-xl hover:-translate-y-2 transition-transform group">
+                    <i class="fas fa-network-wired text-3xl md:text-4xl text-green-400 mb-3 group-hover:scale-110 transition-transform"></i>
+                    <div class="font-bold text-sm md:text-base">Networking</div>
+                </div>
+                <div class="glass-panel p-4 md:p-6 rounded-xl hover:-translate-y-2 transition-transform group">
+                    <i class="fas fa-terminal text-3xl md:text-4xl text-gray-400 mb-3 group-hover:scale-110 transition-transform"></i>
+                    <div class="font-bold text-sm md:text-base">Bash</div>
+                </div>
+                <div class="glass-panel p-4 md:p-6 rounded-xl hover:-translate-y-2 transition-transform group">
+                    <i class="fab fa-github text-3xl md:text-4xl text-white mb-3 group-hover:scale-110 transition-transform"></i>
+                    <div class="font-bold text-sm md:text-base">CI/CD</div>
+                </div>
+                <div class="glass-panel p-4 md:p-6 rounded-xl hover:-translate-y-2 transition-transform group">
+                    <i class="fas fa-shield-alt text-3xl md:text-4xl text-red-400 mb-3 group-hover:scale-110 transition-transform"></i>
+                    <div class="font-bold text-sm md:text-base">Security</div>
+                </div>
+                <div class="glass-panel p-4 md:p-6 rounded-xl hover:-translate-y-2 transition-transform group">
+                    <i class="fab fa-linux text-3xl md:text-4xl text-yellow-600 mb-3 group-hover:scale-110 transition-transform"></i>
+                    <div class="font-bold text-sm md:text-base">Linux</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION - UPDATED WITH BETTER IMAGES AND ANIMATIONS -->
+    <section id="projects" class="py-20 bg-black/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <!-- Animated Title like Old Portfolio -->
+                <div style="text-align: center; width: 100%;">
+                    <h2 class="cloud-title text-4xl font-bold text-white mb-4">
+                        <span class="cloud-letter" style="--i: 0">F</span>
+                        <span class="cloud-letter" style="--i: 1">e</span>
+                        <span class="cloud-letter" style="--i: 2">a</span>
+                        <span class="cloud-letter" style="--i: 3">t</span>
+                        <span class="cloud-letter" style="--i: 4">u</span>
+                        <span class="cloud-letter" style="--i: 5">r</span>
+                        <span class="cloud-letter" style="--i: 6">e</span>
+                        <span class="cloud-letter" style="--i: 7">d</span>
+                        <span class="cloud-letter space" style="--i: 8"></span>
+                        <span class="cloud-letter" style="--i: 9">A</span>
+                        <span class="cloud-letter" style="--i: 10">r</span>
+                        <span class="cloud-letter" style="--i: 11">c</span>
+                        <span class="cloud-letter" style="--i: 12">h</span>
+                        <span class="cloud-letter" style="--i: 13">i</span>
+                        <span class="cloud-letter" style="--i: 14">t</span>
+                        <span class="cloud-letter" style="--i: 15">e</span>
+                        <span class="cloud-letter" style="--i: 16">c</span>
+                        <span class="cloud-letter" style="--i: 17">t</span>
+                        <span class="cloud-letter" style="--i: 18">u</span>
+                        <span class="cloud-letter" style="--i: 19">r</span>
+                        <span class="cloud-letter" style="--i: 20">e</span>
+                    </h2>
+                </div>
+                <p class="text-gray-400 mt-4">Interactive cloud solutions built with AWS services</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8 md:gap-10">
+                <!-- Project 1: Serverless Platform -->
+                <div class="project-card glass-panel rounded-xl overflow-hidden group bg-[#0f1117] border border-gray-800 hover:border-[#FF9900] relative">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FF9900] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    
+                    <!-- Full Architecture Image -->
+                    <div class="h-72 bg-black relative overflow-hidden border-b border-gray-800 flex items-center justify-center p-4">
+                        <img src="https://raw.githubusercontent.com/Sabin-Rana/Enterprise-AWS-Serverless-IaC-Platform/main/docs/architecture/aws-serverless-iac-architecture-diagram.png" 
+                             class="architecture-image group-hover:scale-105 transition-transform duration-500"
+                             alt="Enterprise AWS Serverless IaC Platform">
+                        <div class="absolute bottom-4 left-4 bg-black/80 backdrop-blur text-white text-xs font-mono border border-[#FF9900] px-3 py-1 rounded">
+                            <i class="fas fa-code-branch mr-1 text-[#FF9900]"></i> SERVERLESS FIRST
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-[#FF9900] transition-colors">Enterprise Serverless Platform</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            A comprehensive enterprise-grade AWS serverless platform demonstrating modern cloud architecture with AWS Config compliance, 
+                            drift detection, and full-stack application readiness - all validated through strategic zero-cost methodology.
                         </p>
                         
-                        <div class="tech-stack-animated">
-                            <!-- Serverless Core -->
-                            <div class="tech-tag" data-tech="Lambda">
-                                <i class="fas fa-bolt"></i>
-                                Lambda
-                            </div>
-                            <div class="tech-tag" data-tech="API Gateway">
-                                <i class="fas fa-plug"></i>
-                                API Gateway
-                            </div>
-                            <div class="tech-tag" data-tech="DynamoDB">
-                                <i class="fas fa-database"></i>
-                                DynamoDB
-                            </div>
-                            <div class="tech-tag" data-tech="Cognito">
-                                <i class="fas fa-user-lock"></i>
-                                Cognito
-                            </div>
-                            <div class="tech-tag" data-tech="CloudFront">
-                                <i class="fas fa-globe"></i>
-                                CloudFront
-                            </div>
-                            
-                            <!-- Infrastructure & Security -->
-                            <div class="tech-tag" data-tech="Terraform">
-                                <i class="fas fa-code"></i>
-                                Terraform
-                            </div>
-                            <div class="tech-tag" data-tech="AWS Config">
-                                <i class="fas fa-shield-alt"></i>
-                                AWS Config
-                            </div>
-                            <div class="tech-tag" data-tech="CloudWatch">
-                                <i class="fas fa-chart-line"></i>
-                                CloudWatch
-                            </div>
-                            
-                            <!-- DevOps -->
-                            <div class="tech-tag" data-tech="CI/CD">
-                                <i class="fas fa-rocket"></i>
-                                CI/CD
-                            </div>
-                            <div class="tech-tag" data-tech="GitHub Actions">
-                                <i class="fab fa-github"></i>
-                                GitHub Actions
-                            </div>
-                            <div class="tech-tag" data-tech="Drift Detection">
-                                <i class="fas fa-sync-alt"></i>
-                                Drift Detection
-                            </div>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">Terraform</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">Lambda</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">DynamoDB</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">AWS Config</span>
                         </div>
-                        
-                        <div class="project-stats">
-                            <div class="stat">
-                                <i class="fas fa-server"></i>
-                                <span>30 Resources</span>
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Zero Cost</span>
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-shield-alt"></i>
-                                <span>Compliant</span>
-                            </div>
-                        </div>
-                        
-                        <div class="project-actions">
-                            <a href="https://github.com/Sabin-Rana/Enterprise-AWS-Serverless-IaC-Platform" class="project-link-ripple" target="_blank">
-                                <i class="fab fa-github"></i>
-                                View Repository
-                            </a>
-                            <button class="copy-link-btn" data-url="https://github.com/Sabin-Rana/Enterprise-AWS-Serverless-IaC-Platform">
-                                <i class="fas fa-link"></i>
-                                Copy URL
-                            </button>
-                        </div>
+
+                        <a href="https://github.com/Sabin-Rana/Enterprise-AWS-Serverless-IaC-Platform" target="_blank" class="inline-flex items-center justify-center w-full py-3 border border-[#FF9900] text-[#FF9900] font-bold text-sm rounded hover:bg-[#FF9900] hover:text-black transition-all">
+                            View Repository <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
                     </div>
                 </div>
-                
-                <div class="card-glow"></div>
-            </div>
 
-            <!-- Project 2 - Enterprise AWS 3-Tier Architecture -->
-                <div class="project-card-3d" data-tilt>
-                    <div class="project-card-inner">
-                        <div class="project-image-hover">
-                            <img src="https://raw.githubusercontent.com/Sabin-Rana/enterprise-aws-3tier-architecture/main/docs/architecture-diagram/aws-3tier-architecture-diagram.png" alt="Enterprise AWS 3-Tier Architecture">
-                            <div class="project-overlay">
-                                <button class="view-architecture-btn">
-                                    <i class="fas fa-expand"></i>
-                                    View Architecture
-                                </button>
-                            </div>
-                        </div>
-                        <div class="project-content-advanced">
-                            <div class="project-header">
-                                <h3>Enterprise AWS 3-Tier Architecture</h3>
-                                <div class="project-badge">Enterprise Validated</div>
-                            </div>
-                            
-                            <p class="project-description">
-                                A comprehensive enterprise-grade AWS infrastructure designed and validated through Terraform, demonstrating professional DevOps practices with absolute cost control.<br><br>
-                                
-                                <strong>Key Achievements:</strong><br>
-                                • 57 AWS Resources validated across 6 Terraform modules<br>
-                                • Zero-Cost Validation - Complete infrastructure testing without deployment costs<br>
-                                • Safety-First Approach - 7 automation scripts for cost management<br>
-                                • Enterprise CI/CD - GitHub Actions with safety controls<br>
-                            </p>
-                            
-                            <div class="tech-stack-animated">
-                                <!-- DevOps & Tools -->
-                                <div class="tech-tag" data-tech="Terraform">
-                                    <i class="fas fa-code"></i>
-                                    Terraform
-                                </div>
-                                <div class="tech-tag" data-tech="Docker">
-                                    <i class="fab fa-docker"></i>
-                                    Docker
-                                </div>
-                                <div class="tech-tag" data-tech="CI/CD">
-                                    <i class="fas fa-rocket"></i>
-                                    CI/CD
-                                </div>
-                                <div class="tech-tag" data-tech="Bash">
-                                    <i class="fas fa-terminal"></i>
-                                    Bash
-                                </div>
-                                <div class="tech-tag" data-tech="GitHub">
-                                    <i class="fab fa-github"></i>
-                                    GitHub
-                                </div>
-                                
-                                <!-- AWS Networking -->
-                                <div class="tech-tag" data-tech="VPC">
-                                    <i class="fas fa-network-wired"></i>
-                                    VPC
-                                </div>
-                                <div class="tech-tag" data-tech="ALB">
-                                    <i class="fas fa-balance-scale"></i>
-                                    ALB
-                                </div>
-                                <div class="tech-tag" data-tech="Internet Gateway">
-                                    <i class="fas fa-globe"></i>
-                                    IGW
-                                </div>
-                                <div class="tech-tag" data-tech="NAT Gateway">
-                                    <i class="fas fa-random"></i>
-                                    NAT
-                                </div>
-                                
-                                <!-- AWS Compute -->
-                                <div class="tech-tag" data-tech="EC2">
-                                    <i class="fas fa-server"></i>
-                                    EC2
-                                </div>
-                                <div class="tech-tag" data-tech="Auto Scaling">
-                                    <i class="fas fa-arrows-alt-v"></i>
-                                    Auto Scaling
-                                </div>
-                                
-                                <!-- AWS Database -->
-                                <div class="tech-tag" data-tech="RDS">
-                                    <i class="fas fa-database"></i>
-                                    RDS
-                                </div>
-                                
-                                <!-- AWS Security -->
-                                <div class="tech-tag" data-tech="Security Groups">
-                                    <i class="fas fa-shield-alt"></i>
-                                    Security
-                                </div>
-                                <div class="tech-tag" data-tech="IAM">
-                                    <i class="fas fa-user-lock"></i>
-                                    IAM
-                                </div>
-                                
-                                <!-- AWS Monitoring -->
-                                <div class="tech-tag" data-tech="CloudWatch">
-                                    <i class="fas fa-chart-line"></i>
-                                    Monitoring
-                                </div>
-                                
-                                <!-- Application Stack -->
-                                <div class="tech-tag" data-tech="Node.js">
-                                    <i class="fab fa-node-js"></i>
-                                    Node.js
-                                </div>
-                                <div class="tech-tag" data-tech="PostgreSQL">
-                                    <i class="fas fa-database"></i>
-                                    PostgreSQL
-                                </div>
-                            </div>
-
-                            <div class="project-stats">
-                                <div class="stat">
-                                    <i class="fas fa-layer-group"></i>
-                                    <span>3-Tier</span>
-                                </div>
-                                <div class="stat">
-                                    <i class="fas fa-bolt"></i>
-                                    <span>HA</span>
-                                </div>
-                                <div class="stat">
-                                    <i class="fas fa-shield-alt"></i>
-                                    <span>Secure</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="project-actions">
-                            <a href="https://github.com/Sabin-Rana/enterprise-aws-3tier-architecture" class="project-link-ripple" target="_blank">
-                                <i class="fab fa-github"></i>
-                                View Repository
-                            </a>
-                            <button class="copy-link-btn" data-url="https://github.com/Sabin-Rana/enterprise-aws-3tier-architecture">
-                                <i class="fas fa-link"></i>
-                                Copy URL
-                            </button>
-                        </div>
-                    </div>
+                <!-- Project 2: 3-Tier Architecture -->
+                <div class="project-card glass-panel rounded-xl overflow-hidden group bg-[#0f1117] border border-gray-800 hover:border-blue-400 relative">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     
-                    <div class="card-glow"></div>
+                    <div class="h-72 bg-black relative overflow-hidden border-b border-gray-800 flex items-center justify-center p-4">
+                        <img src="https://raw.githubusercontent.com/Sabin-Rana/enterprise-aws-3tier-architecture/main/docs/architecture-diagram/aws-3tier-architecture-diagram.png" 
+                             class="architecture-image group-hover:scale-105 transition-transform duration-500"
+                             alt="Enterprise AWS 3-Tier Architecture">
+                        <div class="absolute bottom-4 left-4 bg-black/80 backdrop-blur text-white text-xs font-mono border border-blue-400 px-3 py-1 rounded">
+                            <i class="fas fa-server mr-1 text-blue-400"></i> ENTERPRISE VALIDATED
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">Enterprise 3-Tier Architecture</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            A comprehensive enterprise-grade AWS infrastructure designed and validated through Terraform, demonstrating professional DevOps practices 
+                            with absolute cost control. Includes 57 AWS Resources validated across 6 Terraform modules with Zero-Cost Validation.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">VPC</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">Auto Scaling</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">ALB</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">RDS</span>
+                        </div>
+
+                        <a href="https://github.com/Sabin-Rana/enterprise-aws-3tier-architecture" target="_blank" class="inline-flex items-center justify-center w-full py-3 border border-blue-400 text-blue-400 font-bold text-sm rounded hover:bg-blue-400 hover:text-black transition-all">
+                            View Repository <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
                 </div>
-            <!-- Project 3 - Terraform Infrastructure Automation Mastery -->
-<div class="project-card-3d" data-tilt>
-    <div class="project-card-inner">
-        <div class="project-image-hover">
-            <img src="assets/images/blog/Terraform_Mastery.png" alt="Terraform Infrastructure Automation">
-            <div class="project-overlay">
-                <button class="view-architecture-btn">
-                    <i class="fas fa-expand"></i>
-                    View Learning Path
-                </button>
+
+                <!-- PROJECT 3: TERRAFORM MASTERY - IMPROVED -->
+                <div class="project-card glass-panel rounded-xl overflow-hidden group bg-[#0f1117] border border-gray-800 hover:border-green-400 relative lg:col-span-2">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    
+                    <div class="h-72 bg-black relative overflow-hidden border-b border-gray-800 flex items-center justify-center p-4">
+                        <img src="assets/images/blog/Terraform_Mastery.png" 
+                             class="architecture-image group-hover:scale-105 transition-transform duration-500"
+                             alt="Terraform Infrastructure Automation Mastery">
+                        <div class="absolute bottom-4 left-4 bg-black/80 backdrop-blur text-white text-xs font-mono border border-green-400 px-3 py-1 rounded">
+                            <i class="fas fa-graduation-cap mr-1 text-green-400"></i> SYSTEMATIC LEARNING
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-green-400 transition-colors">Terraform Infrastructure Automation Mastery</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            A comprehensive Infrastructure as Code mastery program demonstrating systematic progression from foundational AWS console expertise 
+                            to advanced Terraform automation. This structured learning journey showcases methodical skill development in cloud infrastructure automation 
+                            with 93% deployment efficiency - Automated infrastructure provisioning from 45 minutes to 3 minutes.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">Terraform</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">AWS</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">Automation</span>
+                            <span class="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded border border-gray-700 font-mono">CI/CD</span>
+                        </div>
+
+                        <a href="https://github.com/Sabin-Rana/terraform-learning-journey" target="_blank" class="inline-flex items-center justify-center w-full py-3 border border-green-400 text-green-400 font-bold text-sm rounded hover:bg-green-400 hover:text-black transition-all">
+                            View Learning Journey <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="project-content-advanced">
-            <div class="project-header">
-                <h3>Terraform Infrastructure Automation Mastery</h3>
-                <div class="project-badge">Systematic Learning</div>
-            </div>
-            
-            <p class="project-description">
-                A comprehensive Infrastructure as Code mastery program demonstrating systematic progression from foundational AWS console expertise to advanced Terraform automation. This structured learning journey showcases methodical skill development in cloud infrastructure automation.<br><br>
+    </section>
+
+    <!-- QUALIFICATIONS SECTION - UPDATED WITH WHITE BACKGROUND ICONS -->
+    <section id="qualifications" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <h2 class="cloud-title text-3xl md:text-4xl font-bold text-white text-center mb-12">
+                <span class="cloud-letter" style="--i: 0">Q</span>
+                <span class="cloud-letter" style="--i: 1">u</span>
+                <span class="cloud-letter" style="--i: 2">a</span>
+                <span class="cloud-letter" style="--i: 3">l</span>
+                <span class="cloud-letter" style="--i: 4">i</span>
+                <span class="cloud-letter" style="--i: 5">f</span>
+                <span class="cloud-letter" style="--i: 6">i</span>
+                <span class="cloud-letter" style="--i: 7">c</span>
+                <span class="cloud-letter" style="--i: 8">a</span>
+                <span class="cloud-letter" style="--i: 9">t</span>
+                <span class="cloud-letter" style="--i: 10">i</span>
+                <span class="cloud-letter" style="--i: 11">o</span>
+                <span class="cloud-letter" style="--i: 12">n</span>
+                <span class="cloud-letter" style="--i: 13">s</span>
+                <span class="cloud-letter space" style="--i: 14"></span>
+                <span class="cloud-letter" style="--i: 15">&</span>
+                <span class="cloud-letter space" style="--i: 16"></span>
+                <span class="cloud-letter" style="--i: 17">C</span>
+                <span class="cloud-letter" style="--i: 18">e</span>
+                <span class="cloud-letter" style="--i: 19">r</span>
+                <span class="cloud-letter" style="--i: 20">t</span>
+                <span class="cloud-letter" style="--i: 21">i</span>
+                <span class="cloud-letter" style="--i: 22">f</span>
+                <span class="cloud-letter" style="--i: 23">i</span>
+                <span class="cloud-letter" style="--i: 24">c</span>
+                <span class="cloud-letter" style="--i: 25">a</span>
+                <span class="cloud-letter" style="--i: 26">t</span>
+                <span class="cloud-letter" style="--i: 27">i</span>
+                <span class="cloud-letter" style="--i: 28">o</span>
+                <span class="cloud-letter" style="--i: 29">n</span>
+                <span class="cloud-letter" style="--i: 30">s</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-8 mobile-space-y-4">
                 
-                <strong>Key Achievements:</strong><br>
-                • 93% Deployment Efficiency - Automated infrastructure provisioning from 45 minutes to 3 minutes<br>
-                • 10-Phase Structured Curriculum - Progressive mastery from basic to production-grade patterns<br>
-                • 8 Foundational Implementations - Deep AWS service understanding before automation<br>
-                • Enterprise-Grade Safety - Automated cost controls and security compliance<br>
-                • Production Documentation - Comprehensive troubleshooting and implementation guides<br>
-                • Real-World Scenarios - Documented solutions for complex infrastructure challenges
-            </p>
-            
-            <div class="tech-stack-animated">
-                <div class="tech-tag" data-tech="Terraform">
-                    <i class="fas fa-code"></i>
-                    Terraform IaC
+                <!-- Certifications -->
+                <div class="space-y-6">
+                    <h3 class="text-xl text-[#FF9900] font-bold border-b border-gray-700 pb-2">Professional Certifications</h3>
+                    
+                    <!-- AWS -->
+                    <div class="glass-panel p-6 rounded-xl flex items-center gap-6 group hover:border-[#FF9900] cursor-default mobile-stack mobile-p-4">
+                        <div class="w-20 h-20 flex-shrink-0 reactive-img-container rounded">
+                             <img src="assets/images/certificates/aws.png" alt="AWS Badge" class="w-full h-full object-contain white-bg-icon">
+                        </div>
+                        <div class="mobile-text-center md:text-left">
+                            <h4 class="text-white font-bold text-lg group-hover:text-[#FF9900] transition-colors">AWS Solutions Architect</h4>
+                            <p class="text-sm text-gray-400">Associate (SAA-C03)</p>
+                            <a href="https://www.credly.com/badges/080be029-2747-438f-82cc-5f403008e2fa" class="text-[#FF9900] text-xs hover:underline" target="_blank">
+                                Verify Credential <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Cisco -->
+                    <div class="glass-panel p-6 rounded-xl flex items-center gap-6 group hover:border-blue-400 cursor-default mobile-stack mobile-p-4">
+                        <div class="w-20 h-20 flex-shrink-0 reactive-img-container rounded">
+                             <img src="assets/images/certificates/ccnp.png" alt="Cisco Badge" class="w-full h-full object-contain white-bg-icon">
+                        </div>
+                        <div class="mobile-text-center md:text-left">
+                            <h4 class="text-white font-bold text-lg group-hover:text-blue-400 transition-colors">Cisco Certified Specialist</h4>
+                            <p class="text-sm text-gray-400">Enterprise Core</p>
+                            <a href="https://www.credly.com/badges/53ed66cb-6195-44cb-b101-768afd501330" class="text-blue-400 text-xs hover:underline" target="_blank">
+                                Verify Credential <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ICSI -->
+                    <div class="glass-panel p-6 rounded-xl flex items-center gap-6 group hover:border-green-400 cursor-default mobile-stack mobile-p-4">
+                        <div class="w-20 h-20 flex-shrink-0 reactive-img-container rounded">
+                             <img src="assets/images/certificates/networksecu.jpeg" alt="ICSI Badge" class="w-full h-full object-contain white-bg-icon">
+                        </div>
+                        <div class="mobile-text-center md:text-left">
+                            <h4 class="text-white font-bold text-lg group-hover:text-green-400 transition-colors">ICSI | CNSS Certified</h4>
+                            <p class="text-sm text-gray-400">Network Security Specialist</p>
+                            <a href="https://www.credential.net/2571561b-ae44-4627-89b7-fc38c9778883" class="text-green-400 text-xs hover:underline" target="_blank">
+                                Verify Credential <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="tech-tag" data-tech="AWS">
-                    <i class="fab fa-aws"></i>
-                    AWS Cloud
-                </div>
-                <div class="tech-tag" data-tech="Automation">
-                    <i class="fas fa-robot"></i>
-                    Automation
-                </div>
-                <div class="tech-tag" data-tech="CI/CD">
-                    <i class="fas fa-sync-alt"></i>
-                    CI/CD Pipelines
-                </div>
-                <div class="tech-tag" data-tech="Security">
-                    <i class="fas fa-shield-alt"></i>
-                    Security First
-                </div>
-                <div class="tech-tag" data-tech="Cost Optimization">
-                    <i class="fas fa-dollar-sign"></i>
-                    Cost Control
-                </div>
-                <div class="tech-tag" data-tech="Bash">
-                    <i class="fas fa-terminal"></i>
-                    Bash Scripting
-                </div>
-                <div class="tech-tag" data-tech="GitHub">
-                    <i class="fab fa-github"></i>
-                    GitHub Actions
+
+                <!-- Education -->
+                <div class="space-y-6">
+                    <h3 class="text-xl text-[#FF9900] font-bold border-b border-gray-700 pb-2">Academic Background</h3>
+
+                    <div class="glass-panel p-6 rounded-xl group hover:border-purple-400 mobile-p-4">
+                        <div class="flex justify-between items-start mobile-stack">
+                            <div class="flex gap-4 items-center">
+                                 <div class="w-16 h-16 flex-shrink-0 bg-gray-800 rounded-lg flex items-center justify-center reactive-img-container">
+                                     <img src="assets/images/certificates/london-met-logo.png" alt="London Met" class="w-12 h-12 object-contain white-bg-icon">
+                                 </div>
+                                 <div class="mobile-text-center md:text-left">
+                                    <h4 class="text-white font-bold text-lg">Master of Science (MSc)</h4>
+                                    <p class="text-[#FF9900] text-sm font-bold">IT & Applied Security</p>
+                                    <p class="text-gray-400 text-sm">London Metropolitan University</p>
+                                    <p class="text-gray-500 text-xs mt-1">Advanced cybersecurity</p>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-xl group hover:border-purple-400 mobile-p-4">
+                         <div class="flex justify-between items-start mobile-stack">
+                            <div class="flex gap-4 items-center">
+                                <div class="w-16 h-16 flex-shrink-0 bg-gray-800 rounded-lg flex items-center justify-center reactive-img-container">
+                                     <img src="assets/images/certificates/london-met-logo.png" alt="London Met" class="w-12 h-12 object-contain white-bg-icon">
+                                 </div>
+                                <div class="mobile-text-center md:text-left">
+                                    <h4 class="text-white font-bold text-lg">BSc (Hons)</h4>
+                                    <p class="text-[#FF9900] text-sm font-bold">Computer Networking & IT Security</p>
+                                    <p class="text-gray-400 text-sm">London Metropolitan University</p>
+                                    <p class="text-gray-500 text-xs mt-1">Network architecture and security protocols</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="project-stats">
-                <div class="stat">
-                    <i class="fas fa-road"></i>
-                    <span>10 Phases</span>
-                </div>
-                <div class="stat">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>93% Faster</span>
-                </div>
-                <div class="stat">
-                    <i class="fas fa-project-diagram"></i>
-                    <span>8 Foundations</span>
-                </div>
+        </div>
+    </section>
+
+    <!-- BLOG SECTION - UPDATED WITH REAL CONTENT -->
+    <section id="blog" class="py-20 bg-black/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <h2 class="cloud-title text-3xl md:text-4xl font-bold text-white mb-4">
+                    <span class="cloud-letter" style="--i: 0">F</span>
+                    <span class="cloud-letter" style="--i: 1">r</span>
+                    <span class="cloud-letter" style="--i: 2">o</span>
+                    <span class="cloud-letter" style="--i: 3">m</span>
+                    <span class="cloud-letter space" style="--i: 4"></span>
+                    <span class="cloud-letter" style="--i: 5">C</span>
+                    <span class="cloud-letter" style="--i: 6">o</span>
+                    <span class="cloud-letter" style="--i: 7">n</span>
+                    <span class="cloud-letter" style="--i: 8">s</span>
+                    <span class="cloud-letter" style="--i: 9">o</span>
+                    <span class="cloud-letter" style="--i: 10">l</span>
+                    <span class="cloud-letter" style="--i: 11">e</span>
+                    <span class="cloud-letter space" style="--i: 12"></span>
+                    <span class="cloud-letter" style="--i: 13">t</span>
+                    <span class="cloud-letter" style="--i: 14">o</span>
+                    <span class="cloud-letter space" style="--i: 15"></span>
+                    <span class="cloud-letter" style="--i: 16">C</span>
+                    <span class="cloud-letter" style="--i: 17">o</span>
+                    <span class="cloud-letter" style="--i: 18">d</span>
+                    <span class="cloud-letter" style="--i: 19">e</span>
+                </h2>
+                <p class="text-gray-400">My journey learning Terraform and cloud automation</p>
             </div>
-            
-            <div class="project-actions">
-                <a href="https://github.com/Sabin-Rana/terraform-learning-journey" class="project-link-ripple" target="_blank">
-                    <i class="fab fa-github"></i>
-                    View Journey
+
+            <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+                <!-- Post 1 - REAL CONTENT -->
+                <article class="glass-panel rounded-xl overflow-hidden group cursor-pointer hover:border-[#FF9900] transition-colors">
+                    <div class="h-48 md:h-56 bg-gray-900 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 z-10 bg-black/70 backdrop-blur px-3 py-1 rounded text-xs font-bold text-[#FF9900] border border-[#FF9900]">
+                            TERRAFORM
+                        </div>
+                        <div class="reactive-img-container h-full w-full">
+                             <img src="assets/images/blog/terraform-console-to-code.png" alt="Starting My Terraform Journey" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-6">
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-3 font-mono">
+                            <i class="far fa-calendar-alt"></i> October 4, 2025
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-[#FF9900] transition-colors">Starting My Terraform Journey</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-3">
+                            After months of AWS console experience, I'm now automating everything with Terraform. Learning how Infrastructure as Code transforms cloud management...
+                        </p>
+                        <a href="https://sabin-codeops.hashnode.dev/starting-my-terraform-journey-from-aws-console-to-infrastructure-as-code" class="flex items-center text-[#FF9900] text-sm font-bold mt-auto" target="_blank">
+                            Read More <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Post 2 - REAL CONTENT -->
+                <article class="glass-panel rounded-xl overflow-hidden group cursor-pointer hover:border-blue-400 transition-colors">
+                    <div class="h-48 md:h-56 bg-gray-900 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 z-10 bg-black/70 backdrop-blur px-3 py-1 rounded text-xs font-bold text-blue-400 border border-blue-400">
+                            CAREER
+                        </div>
+                        <div class="reactive-img-container h-full w-full">
+                             <img src="assets/images/blog/cloud-networking-pivot.png" alt="From Networking to Cloud Career Pivot" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-6">
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-3 font-mono">
+                            <i class="far fa-calendar-alt"></i> October 15, 2025
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">From Networking to Cloud</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-3">
+                            How my Cisco Certified Specialist - Enterprise Core background became my secret weapon in cloud architecture...
+                        </p>
+                        <a href="https://sabin-codeops.hashnode.dev/from-networking-to-cloud-the-best-career-pivot-i-almost-didnt-make" class="flex items-center text-blue-400 text-sm font-bold mt-auto" target="_blank">
+                            Read More <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Post 3 - REAL CONTENT -->
+                <article class="glass-panel rounded-xl overflow-hidden group cursor-pointer hover:border-green-400 transition-colors">
+                    <div class="h-48 md:h-56 bg-gray-900 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 z-10 bg-black/70 backdrop-blur px-3 py-1 rounded text-xs font-bold text-green-400 border border-green-400">
+                            AWS ARCHITECTURE
+                        </div>
+                        <div class="reactive-img-container h-full w-full">
+                             <img src="assets/images/blog/3tier-architecture.png" alt="From $10 Scare to Zero-Cost Mastery" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-6">
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-3 font-mono">
+                            <i class="far fa-calendar-alt"></i> October 24, 2025
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-green-400 transition-colors">From $10 Scare to Zero-Cost Mastery</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-3">
+                            The process of taking my existing AWS console projects and converting them to reproducible Infrastructure as Code with Terraform modules...
+                        </p>
+                        <a href="https://sabin-codeops.hashnode.dev/from-10-scare-to-zero-cost-mastery-my-aws-3-tier-architecture-journey" class="flex items-center text-green-400 text-sm font-bold mt-auto" target="_blank">
+                            Read More <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Blog CTA -->
+            <div class="text-center mt-12">
+                <a href="https://sabin-codeops.hashnode.dev" class="inline-flex items-center px-6 py-3 bg-[#FF9900] text-black font-bold rounded hover:bg-white transition-colors" target="_blank">
+                    View My Blog <i class="fas fa-external-link-alt ml-2"></i>
                 </a>
-                <button class="copy-link-btn" data-url="https://github.com/Sabin-Rana/terraform-learning-journey">
-                    <i class="fas fa-link"></i>
-                    Copy URL
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="card-glow"></div>
-</div>
-        </div>
-    </div>
-</section>
-
-<!-- Architecture Modal -->
-<div id="architectureModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <img id="modalImage" src="" alt="Architecture Diagram">
-    </div>
-</div>
-
-    <!-- Blog Section -->
-    <section id="blog" class="blog">
-        <div class="container">
-            <h2 class="section-title">From Console to Code</h2>
-            <p class="section-subtitle">My journey learning Terraform and cloud automation</p>
-            
-            <div class="blog-grid">
-                <article class="blog-card">
-                    <div class="blog-image">
-                        <img src="assets/images/blog/terraform-console-to-code.png" alt="Starting My Terraform Journey">
-                    </div>
-                    <div class="blog-content">
-                        <h3>Starting My Terraform Journey</h3>
-                        <p class="blog-date">October 4, 2025</p>
-                        <p>After months of AWS console experience, I'm now automating everything with Terraform. Learning how Infrastructure as Code transforms cloud management...</p>
-                        <a href="https://sabin-codeops.hashnode.dev/starting-my-terraform-journey-from-aws-console-to-infrastructure-as-code" class="blog-link" target="_blank">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </article>
-
-                <article class="blog-card">
-                    <div class="blog-image">
-                        <img src="assets/images/blog/cloud-networking-pivot.png" alt="From Networking to Cloud Career Pivot">
-                    </div>
-                    <div class="blog-content">
-                        <h3>From Networking to Cloud: The Best Career Pivot I Almost Didn't Make</h3>
-                        <p class="blog-date">October 15, 2025</p>
-                        <p>How my Cisco Certified Specialist - Enterprise Core background became my secret weapon in cloud architecture. Discovering that VPCs, subnets, and routing were just networking on turbo mode...</p>
-                        <a href="https://sabin-codeops.hashnode.dev/from-networking-to-cloud-the-best-career-pivot-i-almost-didnt-make?source=more_articles_bottom_blogs" class="blog-link" target="_blank">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </article>
-
-                <article class="blog-card">
-                    <div class="blog-image">
-                        <img src="assets/images/blog/3tier-architecture.png" alt="From $10 Scare to Zero-Cost Mastery">
-                    </div>
-                    <div class="blog-content">
-                        <h3>From $10 Scare to Zero-Cost Mastery: My AWS 3-Tier Architecture Journey</h3>
-                        <p class="blog-date">October 24, 2025</p>
-                        <p>The process of taking my existing AWS console projects and converting them to reproducible Infrastructure as Code with Terraform modules...</p>
-                        <a href="https://sabin-codeops.hashnode.dev/from-10-scare-to-zero-cost-mastery-my-aws-3-tier-architecture-journey" class="blog-link" target="_blank">Read More <i class="fas fa-arrow-right"></i></a>
-                </article>
-            </div>
-
-            <div class="blog-cta">
-                <a href="https://sabin-codeops.hashnode.dev" class="btn btn-primary" target="_blank">View My Blog <i class="fas fa-external-link-alt"></i></a>
             </div>
         </div>
     </section>
 
-    <!-- Certifications Section -->
-<section id="certifications" class="certifications">
-    <div class="container">
-        <h2 class="section-title">Qualifications</h2>
-        
-        <div class="certs-section">
-            <h3 class="certs-subtitle">Professional Certifications</h3>
-            <div class="certs-grid">
-                <div class="cert-card">
-                    <img src="assets/images/certificates/aws.png" alt="AWS Solutions Architect">
-                    <div class="cert-info">
-                        <h3>AWS Solutions Architect Associate</h3>
-                        <p>Validated expertise in designing distributed systems on AWS</p>
-                        <span class="cert-date">2025</span>
-                        <a href="https://www.credly.com/badges/080be029-2747-438f-82cc-5f403008e2fa" class="cert-link" target="_blank">
-                            Verify Credential <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
+    <!-- FOOTER - UPDATED WITH REAL CONTACT INFO -->
+    <footer id="contact" class="py-12 bg-black border-t border-gray-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-3xl font-bold text-white mb-6">Get In Touch</h2>
+            <p class="text-gray-400 mb-8">
+                Currently open for opportunities in Cloud Engineering and Solutions Architecture.
+            </p>
 
-                <div class="cert-card">
-                    <img src="assets/images/certificates/ccnp.png" alt="Cisco Certified Specialist - Enterprise Core">
-                    <div class="cert-info">
-                        <h3>Cisco Certified Specialist - Enterprise Core</h3>
-                        <p>Cisco Certified Specialist - Enterprise Core</p>
-                        <span class="cert-date">2025</span>
-                        <a href="https://www.credly.com/badges/53ed66cb-6195-44cb-b101-768afd501330" class="cert-link" target="_blank">
-                            Verify Credential <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
+            <!-- Contact Info from Old Portfolio -->
+            <div class="mb-8 space-y-4">
+                <div>
+                    <a href="mailto:contactsabinrana@gmail.com" class="text-[#FF9900] hover:text-white transition-colors text-lg">
+                        <i class="fas fa-envelope mr-2"></i>contactsabinrana@gmail.com
+                    </a>
                 </div>
-
-                <div class="cert-card">
-                    <img src="assets/images/certificates/networksecu.jpeg" alt="ICSI Certification">
-                    <div class="cert-info">
-                        <h3>ICSI | CNSS Certified Network Security Specialist</h3>
-                        <p>Network security protocols and defensive strategies</p>
-                        <span class="cert-date">2020</span>
-                        <a href="https://www.credential.net/2571561b-ae44-4627-89b7-fc38c9778883" class="cert-link" target="_blank">
-                            Verify Credential <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
+                <div class="flex justify-center gap-6">
+                    <a href="https://www.linkedin.com/in/sabinrana/" class="text-gray-400 hover:text-[#FF9900] transition-colors" target="_blank">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="https://github.com/Sabin-Rana" class="text-gray-400 hover:text-[#FF9900] transition-colors" target="_blank">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="https://www.credly.com/users/sabin-rana" class="text-gray-400 hover:text-[#FF9900] transition-colors" target="_blank">
+                        <i class="fas fa-award text-xl"></i>
+                    </a>
                 </div>
             </div>
-        </div>
 
-        <div class="education-section">
-            <h3 class="certs-subtitle">Academic Background</h3>
-            <div class="certs-grid">
-                <div class="cert-card">
-    <img src="assets/images/certificates/london-met-logo.png" alt="London Metropolitan University">
-    <div class="cert-info">
-        <h3>MScIT Applied Security</h3>
-        <p>London Metropolitan University</p>
-        <span class="cert-date">2023</span>
-        <p class="education-focus">Advanced cybersecurity</p>
-    </div>
-</div>
-
-<div class="cert-card">
-    <img src="assets/images/certificates/london-met-logo.png" alt="London Metropolitan University">
-    <div class="cert-info">
-        <h3>BScIT (Hons) Computer Networking & IT Security</h3>
-        <p>London Metropolitan University</p>
-        <span class="cert-date">2018</span>
-        <p class="education-focus">Network architecture and security protocols</p>
-    </div>
-</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <p>I'm always interested in new opportunities and collaborations.</p>
-                    <div class="contact-links">
-                        <a href="mailto:contactsabinrana@gmail.com" class="contact-link">
-                            <i class="fas fa-envelope"></i>
-                            contactsabinrana@gmail.com
-                        </a>
-                        <a href="https://www.linkedin.com/in/sabinrana/" class="contact-link" target="_blank">
-                            <i class="fab fa-linkedin"></i>
-                            LinkedIn Profile
-                        </a>
-                        <a href="https://github.com/Sabin-Rana" class="contact-link" target="_blank">
-                            <i class="fab fa-github"></i>
-                            GitHub Portfolio
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Sabin Rana. All rights reserved.</p>
-            <p>AWS Certified • Cloud Engineer</p>
+            <p class="text-gray-600 text-sm">Copyright &copy; Sabin Rana 2025</p>
         </div>
     </footer>
 
-    <!-- External JavaScript -->
-    <script src="assets/js/main.js"></script>
+    <!-- SCRIPTS -->
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            const isOpen = mobileMenu.classList.contains('open');
+            menuBtn.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Typewriter Effect
+        const typeWriterText = ["Cloud Solutions.", "Secure Infrastructure.", "Automated Pipelines."];
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
+        
+        (function type() {
+            if (count === typeWriterText.length) count = 0;
+            currentText = typeWriterText[count];
+            letter = currentText.slice(0, ++index);
+            document.getElementById('typewriter').textContent = letter;
+            if (letter.length === currentText.length) {
+                setTimeout(() => { index = 0; count++; }, 2000);
+            }
+            setTimeout(type, 100);
+        })();
+
+        // Three.js 3D Background (Network Cloud)
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // Particles
+        const geometry = new THREE.BufferGeometry();
+        const particlesCount = 1500;
+        const posArray = new Float32Array(particlesCount * 3);
+        
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 30;
+        }
+        
+        geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        
+        const material = new THREE.PointsMaterial({
+            size: 0.08,
+            color: 0xFF9900,
+            transparent: true,
+            opacity: 0.6,
+        });
+        
+        const particlesMesh = new THREE.Points(geometry, material);
+        scene.add(particlesMesh);
+
+        // Lines (Network Connections)
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x3b82f6, opacity: 0.15, transparent: true });
+        const lineGeometry = new THREE.BufferGeometry();
+        const linePositions = [];
+        for(let i=0; i<200; i++) {
+            const x1 = (Math.random() - 0.5) * 20;
+            const y1 = (Math.random() - 0.5) * 20;
+            const z1 = (Math.random() - 0.5) * 20;
+            const x2 = x1 + (Math.random() - 0.5) * 5;
+            const y2 = y1 + (Math.random() - 0.5) * 5;
+            const z2 = z1 + (Math.random() - 0.5) * 5;
+            linePositions.push(x1, y1, z1, x2, y2, z2);
+        }
+        lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+        const linesMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
+        scene.add(linesMesh);
+
+        camera.position.z = 15;
+
+        // Mouse Interaction
+        let mouseX = 0;
+        let mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX / window.innerWidth - 0.5;
+            mouseY = event.clientY / window.innerHeight - 0.5;
+        });
+
+        // Animation Loop
+        const clock = new THREE.Clock();
+        const tick = () => {
+            const elapsedTime = clock.getElapsedTime();
+            
+            particlesMesh.rotation.y = elapsedTime * 0.05;
+            linesMesh.rotation.y = elapsedTime * 0.05;
+            
+            particlesMesh.rotation.x = mouseY * 0.2;
+            particlesMesh.rotation.y += mouseX * 0.2;
+            
+            renderer.render(scene, camera);
+            window.requestAnimationFrame(tick);
+        };
+        tick();
+
+        // Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.from('.glass-panel', {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.1,
+            scrollTrigger: {
+                trigger: '#about',
+                start: 'top 80%'
+            }
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
