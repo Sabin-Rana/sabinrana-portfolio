@@ -141,10 +141,13 @@
             margin: 4px;
         }
 
-        /* Cloud Title Animation */
+        /* Cloud Title Animation - FIXED FOR MOBILE */
         .cloud-title {
             position: relative;
             display: inline-block;
+            text-align: center;
+            word-wrap: break-word;
+            hyphens: auto;
         }
         
         .cloud-letter {
@@ -175,21 +178,77 @@
             padding: 4px;
         }
 
-        /* Mobile Optimizations */
+        /* SR Logo Animation */
+        .sr-logo {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 900;
+            font-size: 18px;
+            color: #FF9900;
+            background: #232F3E;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .sr-logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 153, 0, 0.4), transparent);
+            animation: shine 3s infinite;
+        }
+
+        .sr-logo::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 0;
+            background: #FF9900;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: connection 2s infinite alternate;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes connection {
+            0% { height: 0; opacity: 0; }
+            50% { height: 20px; opacity: 1; }
+            100% { height: 0; opacity: 0; }
+        }
+
+        /* Mobile Optimizations - IMPROVED */
         @media (max-width: 768px) {
             .mobile-stack { flex-direction: column; }
             .mobile-text-center { text-align: center; }
             .mobile-p-4 { padding: 1rem; }
             .mobile-space-y-4 > * + * { margin-top: 1rem; }
             
-            /* Enhanced Mobile Responsiveness */
+            /* Fixed Title Wrapping */
             .cloud-title {
-                font-size: 1.75rem !important;
-                text-align: center;
+                font-size: 2rem !important;
+                line-height: 1.2 !important;
             }
             
             .cloud-letter {
-                font-size: 1.75rem !important;
+                font-size: inherit !important;
+            }
+            
+            /* Prevent word breaks in titles */
+            .title-no-break {
+                white-space: nowrap;
             }
             
             .glass-panel {
@@ -208,20 +267,52 @@
             .mobile-p-3 {
                 padding: 0.75rem;
             }
+
+            /* Fixed London Met icons */
+            .qualification-icon {
+                width: 60px !important;
+                height: 60px !important;
+                min-width: 60px !important;
+            }
+            
+            .qualification-icon img {
+                width: 40px !important;
+                height: 40px !important;
+            }
         }
 
         @media (max-width: 480px) {
             .cloud-title {
-                font-size: 1.5rem !important;
-            }
-            
-            .cloud-letter {
-                font-size: 1.5rem !important;
+                font-size: 1.75rem !important;
             }
             
             .grid-cols-2 {
                 grid-template-columns: 1fr;
             }
+
+            /* Even smaller screens */
+            .cloud-title {
+                font-size: 1.5rem !important;
+            }
+        }
+
+        /* Qualification Icons Fix */
+        .qualification-icon {
+            width: 80px;
+            height: 80px;
+            min-width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a202c;
+            border-radius: 12px;
+            border: 1px solid #374151;
+        }
+
+        .qualification-icon img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -233,10 +324,10 @@
     <!-- Navigation -->
     <nav class="fixed w-full z-50 bg-[#0f1117]/90 backdrop-blur-md border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-            <!-- Brand -->
+            <!-- Brand with Animated SR Logo -->
             <a href="#" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 bg-[#232F3E] rounded flex items-center justify-center border border-gray-700 group-hover:border-[#FF9900] transition-colors">
-                    <i class="fab fa-aws text-[#FF9900] text-xl"></i>
+                <div class="sr-logo border border-gray-700 group-hover:border-[#FF9900] transition-colors">
+                    SR
                 </div>
                 <div class="leading-none">
                     <div class="font-bold text-lg tracking-wide">SABIN RANA</div>
@@ -273,7 +364,7 @@
         <a href="#contact" class="text-2xl font-bold text-[#FF9900] mobile-link">Contact</a>
     </div>
 
-    <!-- HERO SECTION - KEEPING ORIGINAL NEW DESIGN -->
+    <!-- HERO SECTION -->
     <section class="min-h-screen pt-32 pb-16 flex items-center relative justify-center text-center">
         <div class="max-w-4xl mx-auto px-6 w-full flex flex-col items-center justify-center z-10">
             
@@ -306,7 +397,7 @@
                     </div>
                  </div>
                  <div class="text-center">
-                     <h3 class="font-bold text-white text-xl">AWS Certified Solutions Architect-Associate</h3>
+                     <h3 class="font-bold text-white text-xl">AWS Solutions Architect-Associate</h3>
                  </div>
             </div>
 
@@ -326,7 +417,7 @@
         </div>
     </section>
 
-    <!-- ABOUT SECTION - UPDATED -->
+    <!-- ABOUT SECTION - FIXED MOBILE TITLE -->
     <section id="about" class="py-20">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="glass-panel rounded-2xl p-6 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 items-center mobile-stack">
@@ -339,16 +430,7 @@
                 </div>
                 
                 <div class="w-full md:w-2/3 mobile-text-center">
-                    <h2 class="cloud-title text-3xl font-bold text-white mb-2">
-                        <span class="cloud-letter" style="--i: 0">A</span>
-                        <span class="cloud-letter" style="--i: 1">b</span>
-                        <span class="cloud-letter" style="--i: 2">o</span>
-                        <span class="cloud-letter" style="--i: 3">u</span>
-                        <span class="cloud-letter" style="--i: 4">t</span>
-                        <span class="cloud-letter space" style="--i: 5"></span>
-                        <span class="cloud-letter" style="--i: 6">M</span>
-                        <span class="cloud-letter" style="--i: 7">e</span>
-                    </h2>
+                    <h2 class="text-3xl font-bold text-white mb-2 title-no-break">About Me</h2>
                     <div class="h-1 w-20 bg-[#FF9900] mb-6 mx-auto md:mx-0"></div>
                     
                     <p class="text-gray-300 leading-relaxed mb-6">
@@ -365,7 +447,7 @@
                     <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-6">
                         <span class="cert-badge">
                             <i class="fab fa-aws"></i>
-                            AWS Solutions Architect - Associate
+                            AWS Certified Solutions Architect - Associate
                         </span>
                         <span class="cert-badge" style="border-color: rgba(0, 112, 210, 0.3); background: rgba(0, 112, 210, 0.1);">
                             <i class="fas fa-network-wired"></i>
@@ -397,35 +479,11 @@
         </div>
     </section>
 
-    <!-- EXPERIENCE SECTION - UPDATED WITH COMPANY LINKS -->
+    <!-- EXPERIENCE SECTION - FIXED MOBILE TITLE -->
     <section id="experience" class="py-20 bg-black/20">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-16">
-                <h2 class="cloud-title text-4xl font-bold text-white mb-4">
-                    <span class="cloud-letter" style="--i: 0">P</span>
-                    <span class="cloud-letter" style="--i: 1">r</span>
-                    <span class="cloud-letter" style="--i: 2">o</span>
-                    <span class="cloud-letter" style="--i: 3">f</span>
-                    <span class="cloud-letter" style="--i: 4">e</span>
-                    <span class="cloud-letter" style="--i: 5">s</span>
-                    <span class="cloud-letter" style="--i: 6">s</span>
-                    <span class="cloud-letter" style="--i: 7">i</span>
-                    <span class="cloud-letter" style="--i: 8">o</span>
-                    <span class="cloud-letter" style="--i: 9">n</span>
-                    <span class="cloud-letter" style="--i: 10">a</span>
-                    <span class="cloud-letter" style="--i: 11">l</span>
-                    <span class="cloud-letter space" style="--i: 12"></span>
-                    <span class="cloud-letter" style="--i: 13">E</span>
-                    <span class="cloud-letter" style="--i: 14">x</span>
-                    <span class="cloud-letter" style="--i: 15">p</span>
-                    <span class="cloud-letter" style="--i: 16">e</span>
-                    <span class="cloud-letter" style="--i: 17">r</span>
-                    <span class="cloud-letter" style="--i: 18">i</span>
-                    <span class="cloud-letter" style="--i: 19">e</span>
-                    <span class="cloud-letter" style="--i: 20">n</span>
-                    <span class="cloud-letter" style="--i: 21">c</span>
-                    <span class="cloud-letter" style="--i: 22">e</span>
-                </h2>
+                <h2 class="text-4xl font-bold text-white mb-4 title-no-break">Professional Experience</h2>
                 <div class="h-1 w-24 bg-[#FF9900] mx-auto rounded"></div>
             </div>
 
@@ -487,33 +545,11 @@
         </div>
     </section>
 
-    <!-- SKILLS SECTION -->
+    <!-- SKILLS SECTION - FIXED MOBILE TITLE -->
     <section id="skills" class="py-20">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-16">
-                <h2 class="cloud-title text-4xl font-bold text-white mb-4">
-                    <span class="cloud-letter" style="--i: 0">W</span>
-                    <span class="cloud-letter" style="--i: 1">h</span>
-                    <span class="cloud-letter" style="--i: 2">a</span>
-                    <span class="cloud-letter" style="--i: 3">t</span>
-                    <span class="cloud-letter space" style="--i: 4"></span>
-                    <span class="cloud-letter" style="--i: 5">I</span>
-                    <span class="cloud-letter" style="--i: 6">'</span>
-                    <span class="cloud-letter" style="--i: 7">m</span>
-                    <span class="cloud-letter space" style="--i: 8"></span>
-                    <span class="cloud-letter" style="--i: 9">W</span>
-                    <span class="cloud-letter" style="--i: 10">o</span>
-                    <span class="cloud-letter" style="--i: 11">r</span>
-                    <span class="cloud-letter" style="--i: 12">k</span>
-                    <span class="cloud-letter" style="--i: 13">i</span>
-                    <span class="cloud-letter" style="--i: 14">n</span>
-                    <span class="cloud-letter" style="--i: 15">g</span>
-                    <span class="cloud-letter space" style="--i: 16"></span>
-                    <span class="cloud-letter" style="--i: 17">W</span>
-                    <span class="cloud-letter" style="--i: 18">i</span>
-                    <span class="cloud-letter" style="--i: 19">t</span>
-                    <span class="cloud-letter" style="--i: 20">h</span>
-                </h2>
+                <h2 class="text-4xl font-bold text-white mb-4 title-no-break">What I'm Working With</h2>
                 <p class="text-gray-400">My Cloud Toolkit & Foundation</p>
             </div>
 
@@ -559,36 +595,11 @@
         </div>
     </section>
 
-    <!-- PROJECTS SECTION - UPDATED WITH BETTER IMAGES AND ANIMATIONS -->
+    <!-- PROJECTS SECTION - FIXED MOBILE TITLE -->
     <section id="projects" class="py-20 bg-black/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-16">
-                <!-- Animated Title like Old Portfolio -->
-                <div style="text-align: center; width: 100%;">
-                    <h2 class="cloud-title text-4xl font-bold text-white mb-4">
-                        <span class="cloud-letter" style="--i: 0">F</span>
-                        <span class="cloud-letter" style="--i: 1">e</span>
-                        <span class="cloud-letter" style="--i: 2">a</span>
-                        <span class="cloud-letter" style="--i: 3">t</span>
-                        <span class="cloud-letter" style="--i: 4">u</span>
-                        <span class="cloud-letter" style="--i: 5">r</span>
-                        <span class="cloud-letter" style="--i: 6">e</span>
-                        <span class="cloud-letter" style="--i: 7">d</span>
-                        <span class="cloud-letter space" style="--i: 8"></span>
-                        <span class="cloud-letter" style="--i: 9">A</span>
-                        <span class="cloud-letter" style="--i: 10">r</span>
-                        <span class="cloud-letter" style="--i: 11">c</span>
-                        <span class="cloud-letter" style="--i: 12">h</span>
-                        <span class="cloud-letter" style="--i: 13">i</span>
-                        <span class="cloud-letter" style="--i: 14">t</span>
-                        <span class="cloud-letter" style="--i: 15">e</span>
-                        <span class="cloud-letter" style="--i: 16">c</span>
-                        <span class="cloud-letter" style="--i: 17">t</span>
-                        <span class="cloud-letter" style="--i: 18">u</span>
-                        <span class="cloud-letter" style="--i: 19">r</span>
-                        <span class="cloud-letter" style="--i: 20">e</span>
-                    </h2>
-                </div>
+                <h2 class="text-4xl font-bold text-white mb-4 title-no-break">Featured Architecture</h2>
                 <p class="text-gray-400 mt-4">Interactive cloud solutions built with AWS services</p>
             </div>
 
@@ -697,42 +708,10 @@
         </div>
     </section>
 
-    <!-- QUALIFICATIONS SECTION - UPDATED WITH WHITE BACKGROUND ICONS -->
+    <!-- QUALIFICATIONS SECTION - FIXED MOBILE TITLE & ICONS -->
     <section id="qualifications" class="py-20">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <h2 class="cloud-title text-3xl md:text-4xl font-bold text-white text-center mb-12">
-                <span class="cloud-letter" style="--i: 0">Q</span>
-                <span class="cloud-letter" style="--i: 1">u</span>
-                <span class="cloud-letter" style="--i: 2">a</span>
-                <span class="cloud-letter" style="--i: 3">l</span>
-                <span class="cloud-letter" style="--i: 4">i</span>
-                <span class="cloud-letter" style="--i: 5">f</span>
-                <span class="cloud-letter" style="--i: 6">i</span>
-                <span class="cloud-letter" style="--i: 7">c</span>
-                <span class="cloud-letter" style="--i: 8">a</span>
-                <span class="cloud-letter" style="--i: 9">t</span>
-                <span class="cloud-letter" style="--i: 10">i</span>
-                <span class="cloud-letter" style="--i: 11">o</span>
-                <span class="cloud-letter" style="--i: 12">n</span>
-                <span class="cloud-letter" style="--i: 13">s</span>
-                <span class="cloud-letter space" style="--i: 14"></span>
-                <span class="cloud-letter" style="--i: 15">&</span>
-                <span class="cloud-letter space" style="--i: 16"></span>
-                <span class="cloud-letter" style="--i: 17">C</span>
-                <span class="cloud-letter" style="--i: 18">e</span>
-                <span class="cloud-letter" style="--i: 19">r</span>
-                <span class="cloud-letter" style="--i: 20">t</span>
-                <span class="cloud-letter" style="--i: 21">i</span>
-                <span class="cloud-letter" style="--i: 22">f</span>
-                <span class="cloud-letter" style="--i: 23">i</span>
-                <span class="cloud-letter" style="--i: 24">c</span>
-                <span class="cloud-letter" style="--i: 25">a</span>
-                <span class="cloud-letter" style="--i: 26">t</span>
-                <span class="cloud-letter" style="--i: 27">i</span>
-                <span class="cloud-letter" style="--i: 28">o</span>
-                <span class="cloud-letter" style="--i: 29">n</span>
-                <span class="cloud-letter" style="--i: 30">s</span>
-            </h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12 title-no-break">Qualifications & Certifications</h2>
 
             <div class="grid md:grid-cols-2 gap-8 mobile-space-y-4">
                 
@@ -742,8 +721,8 @@
                     
                     <!-- AWS -->
                     <div class="glass-panel p-6 rounded-xl flex items-center gap-6 group hover:border-[#FF9900] cursor-default mobile-stack mobile-p-4">
-                        <div class="w-20 h-20 flex-shrink-0 reactive-img-container rounded">
-                             <img src="assets/images/certificates/aws.png" alt="AWS Badge" class="w-full h-full object-contain white-bg-icon">
+                        <div class="qualification-icon">
+                             <img src="assets/images/certificates/aws.png" alt="AWS Badge" class="white-bg-icon">
                         </div>
                         <div class="mobile-text-center md:text-left">
                             <h4 class="text-white font-bold text-lg group-hover:text-[#FF9900] transition-colors">AWS Solutions Architect</h4>
@@ -756,8 +735,8 @@
 
                     <!-- Cisco -->
                     <div class="glass-panel p-6 rounded-xl flex items-center gap-6 group hover:border-blue-400 cursor-default mobile-stack mobile-p-4">
-                        <div class="w-20 h-20 flex-shrink-0 reactive-img-container rounded">
-                             <img src="assets/images/certificates/ccnp.png" alt="Cisco Badge" class="w-full h-full object-contain white-bg-icon">
+                        <div class="qualification-icon">
+                             <img src="assets/images/certificates/ccnp.png" alt="Cisco Badge" class="white-bg-icon">
                         </div>
                         <div class="mobile-text-center md:text-left">
                             <h4 class="text-white font-bold text-lg group-hover:text-blue-400 transition-colors">Cisco Certified Specialist</h4>
@@ -770,8 +749,8 @@
 
                     <!-- ICSI -->
                     <div class="glass-panel p-6 rounded-xl flex items-center gap-6 group hover:border-green-400 cursor-default mobile-stack mobile-p-4">
-                        <div class="w-20 h-20 flex-shrink-0 reactive-img-container rounded">
-                             <img src="assets/images/certificates/networksecu.jpeg" alt="ICSI Badge" class="w-full h-full object-contain white-bg-icon">
+                        <div class="qualification-icon">
+                             <img src="assets/images/certificates/networksecu.jpeg" alt="ICSI Badge" class="white-bg-icon">
                         </div>
                         <div class="mobile-text-center md:text-left">
                             <h4 class="text-white font-bold text-lg group-hover:text-green-400 transition-colors">ICSI | CNSS Certified</h4>
@@ -790,8 +769,8 @@
                     <div class="glass-panel p-6 rounded-xl group hover:border-purple-400 mobile-p-4">
                         <div class="flex justify-between items-start mobile-stack">
                             <div class="flex gap-4 items-center">
-                                 <div class="w-16 h-16 flex-shrink-0 bg-gray-800 rounded-lg flex items-center justify-center reactive-img-container">
-                                     <img src="assets/images/certificates/london-met-logo.png" alt="London Met" class="w-12 h-12 object-contain white-bg-icon">
+                                 <div class="qualification-icon">
+                                     <img src="assets/images/certificates/london-met-logo.png" alt="London Met" class="white-bg-icon">
                                  </div>
                                  <div class="mobile-text-center md:text-left">
                                     <h4 class="text-white font-bold text-lg">Master of Science (MSc)</h4>
@@ -806,8 +785,8 @@
                     <div class="glass-panel p-6 rounded-xl group hover:border-purple-400 mobile-p-4">
                          <div class="flex justify-between items-start mobile-stack">
                             <div class="flex gap-4 items-center">
-                                <div class="w-16 h-16 flex-shrink-0 bg-gray-800 rounded-lg flex items-center justify-center reactive-img-container">
-                                     <img src="assets/images/certificates/london-met-logo.png" alt="London Met" class="w-12 h-12 object-contain white-bg-icon">
+                                <div class="qualification-icon">
+                                     <img src="assets/images/certificates/london-met-logo.png" alt="London Met" class="white-bg-icon">
                                  </div>
                                 <div class="mobile-text-center md:text-left">
                                     <h4 class="text-white font-bold text-lg">BSc (Hons)</h4>
@@ -823,32 +802,11 @@
         </div>
     </section>
 
-    <!-- BLOG SECTION - UPDATED WITH REAL CONTENT -->
+    <!-- BLOG SECTION - FIXED MOBILE TITLE -->
     <section id="blog" class="py-20 bg-black/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-16">
-                <h2 class="cloud-title text-3xl md:text-4xl font-bold text-white mb-4">
-                    <span class="cloud-letter" style="--i: 0">F</span>
-                    <span class="cloud-letter" style="--i: 1">r</span>
-                    <span class="cloud-letter" style="--i: 2">o</span>
-                    <span class="cloud-letter" style="--i: 3">m</span>
-                    <span class="cloud-letter space" style="--i: 4"></span>
-                    <span class="cloud-letter" style="--i: 5">C</span>
-                    <span class="cloud-letter" style="--i: 6">o</span>
-                    <span class="cloud-letter" style="--i: 7">n</span>
-                    <span class="cloud-letter" style="--i: 8">s</span>
-                    <span class="cloud-letter" style="--i: 9">o</span>
-                    <span class="cloud-letter" style="--i: 10">l</span>
-                    <span class="cloud-letter" style="--i: 11">e</span>
-                    <span class="cloud-letter space" style="--i: 12"></span>
-                    <span class="cloud-letter" style="--i: 13">t</span>
-                    <span class="cloud-letter" style="--i: 14">o</span>
-                    <span class="cloud-letter space" style="--i: 15"></span>
-                    <span class="cloud-letter" style="--i: 16">C</span>
-                    <span class="cloud-letter" style="--i: 17">o</span>
-                    <span class="cloud-letter" style="--i: 18">d</span>
-                    <span class="cloud-letter" style="--i: 19">e</span>
-                </h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 title-no-break">From Console to Code</h2>
                 <p class="text-gray-400">My journey learning Terraform and cloud automation</p>
             </div>
 
@@ -935,12 +893,12 @@
         </div>
     </section>
 
-    <!-- FOOTER - UPDATED WITH REAL CONTACT INFO -->
+    <!-- FOOTER -->
     <footer id="contact" class="py-12 bg-black border-t border-gray-800">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <h2 class="text-3xl font-bold text-white mb-6">Get In Touch</h2>
             <p class="text-gray-400 mb-8">
-                Currently open for opportunities in Cloud Engineering and Solutions Architecture.
+                Currently open for opportunities in Cloud Engineering.
             </p>
 
             <!-- Contact Info from Old Portfolio -->
